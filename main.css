@@ -31,7 +31,18 @@
     height: 75px;
 }
 
-
+.login_with{
+    box-shadow: 1px 1px 8px 0px #ececec;
+    margin-top: 10px;
+    height: 70px;
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
 .welcome {
     margin-top: 200px;
     display: flex;
@@ -43,7 +54,7 @@
     top: 1%;
     left: 40%;
     position: absolute;
-    margin-top: 100px;
+    margin-top: 150px;
     justify-content: center;
     align-content: center;
 
