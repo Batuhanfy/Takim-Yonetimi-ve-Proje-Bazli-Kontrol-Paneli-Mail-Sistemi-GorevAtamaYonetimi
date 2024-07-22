@@ -23,153 +23,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
 
 
     <title>Dashboard</title>
-    <style>
-        .headings {
-            display: flex;
-            width: 100%;
-            height: 100px;
-            background-color: aliceblue;
-            align-content: center;
-            align-items: center;
-        }
-
-        .headings img {
-            height: 75px;
-        }
-
-        .welcome {
-            margin-top: 70px;
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-        }
-
-        .welcome h3 {
-            font-family: Montserrat;
-            font-weight: 400;
-
-        }
-
-        .fade-in-down {
-            opacity: 0;
-            transform: translateY(-70px);
-            animation: fadeInDown 1s ease forwards;
-        }
-
-        .fade-in-down-2 {
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: fadeInDown 1s ease forwards;
-        }
-
-
-        @keyframes fadeInDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .factions {
-            width: 100%;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .faction {
-            font-family: 'Open Sans';
-            box-shadow: 1px 1px 10px 0px #f2f2f2;
-            margin: 20px;
-            display: flex;
-            width: 150px;
-            font-weight: 400;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            flex-direction: column;
-            background: #ffffff;
-            padding: 20px;
-        }
-
-        .faction:hover {
-            background: #b9b9b912;
-            cursor: pointer;
-        }
-
-        .faction.image {
-            width: 100%;
-            height: 100%;
-        }
-
-        .image {
-            height: 75px;
-        }
-
-        .image img {
-            height: 100%;
-        }
-
-        .card_title {
-            text-align: center;
-            margin: 3px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-        }
-
-        .account {
-            box-shadow: 1px 1px 11px 0px #f6f6f6;
-    padding: 3px 15px 3px 15px;
-    border-radius: 100px;
-    background: #fff;
-    display: flex;
-    position: absolute;
-    right: 50px;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-        }
-        .account:hover{
-            background: #fffff8;
-            cursor: pointer;
-        }
-
-        .account_dev {
-            display: flex;
-    font-family: Montserrat;
-    font-size: 11px;
-    font-weight: 500;
-    color: #042651;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    align-items: flex-start;
-        }
-        .account_dev .name{
-            font-weight:400;
-        }
-        .account_dev .auth{
-            font-weight:600;
-        }
-
-        .account_dev img{
-            height: 15px;
-    margin-right: 15px;
-        }
-    </style>
+  
 </head>
 
 <body>
 
-    <div class="headings">
+    <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png"></div>
         <div class="account">
         <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
@@ -216,9 +79,9 @@ try {
     // Hata modu ayarla (Hataları exception olarak fırlatır)
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    echo "Veritabanı bağlantısı başarılı!";
+    // echo "Veritabanı bağlantısı başarılı!";
 } catch (PDOException $e) {
-    echo "Veritabanı bağlantısı başarısız: " . $e->getMessage();
+    // echo "Veritabanı bağlantısı başarısız: " . $e->getMessage();
 }
 
 ?>
