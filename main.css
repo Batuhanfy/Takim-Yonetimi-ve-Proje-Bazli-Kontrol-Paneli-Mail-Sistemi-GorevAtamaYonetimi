@@ -43,6 +43,20 @@
     flex-wrap: nowrap;
     flex-direction: row;
 }
+.login_with img{
+    box-shadow: 1px 1px 8px 0px #ececec;
+    height: 25px;
+}
+.login_with span{
+    display: flex;
+    border-radius: 200px;
+    padding: 10px;
+    height: 40px;
+    margin: 5px;
+    box-shadow: 1px 1px 8px 4px #ececec;
+    justify-content: center;
+    align-items: center;
+}
 .welcome {
     margin-top: 200px;
     display: flex;
@@ -259,7 +273,22 @@ align-items: center;
     background: #fffff8;
     cursor: pointer;
 }
+.details{
+    display: none;
+    transition-delay: 0s, 0.5s; 
 
+
+}
+.account:hover .details{
+    display: block;
+    height: 150px;
+    background: #dedede;
+    width: 130px;
+    border-radius: 10px 0px 10px 10px;
+    margin-top: 215px;
+    position: absolute;
+    transition-delay: 0s, 0.5s; /* 0.5s delay for color */
+}
 .account_dev {
     display: flex;
 font-family: Montserrat;

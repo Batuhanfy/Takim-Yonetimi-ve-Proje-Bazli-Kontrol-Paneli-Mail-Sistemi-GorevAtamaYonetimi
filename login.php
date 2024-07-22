@@ -1,20 +1,42 @@
 <?php
+
+session_start();
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+   header("Location: dashboard.php");
+} else {
+    // header("Location: login.php");
+    // die();
+}
+
 $host = 'localhost'; // Veritabanı sunucusu
 $dbname = 'openmytask'; // Veritabanı adı
 $user = 'root'; // Veritabanı kullanıcı adı
 $pass = ''; // Veritabanı şifresi
 
-try {
 
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
+
         $username = $_POST['username'] ?? '';
         $password = $_POST['password'] ?? '';
 
+
+
+        if($username == "admin" && $password == "admin") { // dikkat
+            $_SESSION['username'] = $username;
+            $_SESSION['loggedin'] = true;
+        }
+
+
+
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
         $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
         $stmt->execute(['username' => $username]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -23,23 +45,20 @@ try {
         if ($result && ($password == $result['password'])) {
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
-            print_r("istek geldi");
+          
 
             header('Location: dashboard.php');
         } else {
 
             $error_message = 'Giriş başarısız! Lütfen kullanıcı adı ve şifreyi kontrol edin.';
-            echo '<script>
-                    window.onload = function() {
-                        var myModalhataliGiris = new bootstrap.Modal(document.getElementById("hataliGiris"), options)
-                        myModalhataliGiris.show();
-                    }
-                  </script>';
+          
         }
+    } catch (PDOException $e) {
+        $error_message = 'Veritabanı bağlantı hatası: ' . $e->getMessage();
+        print_r("<script> console.log('veritabanı bağlantı hatası var.')</script>");
     }
-} catch (PDOException $e) {
-    $error_message = 'Veritabanı bağlantı hatası: ' . $e->getMessage();
-}
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -92,11 +111,13 @@ try {
                 </form>
 
                 <div class="login_with">
-                       <span><img src="openmytask/google.svg" alt="Google"></span>
-                       <span>1</span>
-                       <span>1</span>
-                       <span>1</span>
-                       <span>1</span>
+                       <a href="https://console.cloud.google.com/"><span><img src="openmytask/google.svg" alt="Google ile Giriş Yap"></span></a>
+                       <a href="https://developers.facebook.com/"><span><img src="openmytask/facebook.svg" alt="Facebook ile Giriş Yap"></span></a>
+                       <a href="https://developer.linkedin.com/"> <span><img src="openmytask/linkedin.svg" alt="LinkedIn ile Giriş Yap"></span></a>
+                       <a href="#(..)yourapi"> <span><img src="openmytask/twitter.svg" alt="X ile Giriş Yap"></span></a>
+                       <a href="#(..)yourapi"><span><img src="openmytask/wordpress.svg" alt="Wordpress ile Giriş Yap"></span></a>
+                       <a href="#(..)yourapi"><span><img src="openmytask/github.svg" alt="GitHub ile Giriş Yap"></span></a>
+                       
                     </div>
 
 

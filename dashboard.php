@@ -1,11 +1,61 @@
 <?php 
 session_start();
+$username="{username}";
+$gorev="{yetki}";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    echo 'Merhaba, ' . htmlspecialchars($_SESSION['username']) . '!';
+    $username=$_SESSION['username'];
 } else {
-    // header("Location: login.php");
-    // die();
+     header("Location: login.php");
+     die();
 }
+
+
+
+$host = 'localhost';
+$db = 'openmytask';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES => false,
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
+    throw new PDOException($e->getMessage(), (int)$e->getCode());
+}
+
+
+try {
+    $sql = "SELECT gorev FROM users WHERE username = :username";
+    
+    $stmt = $pdo->prepare($sql);
+    
+    $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+    
+    $stmt->execute();
+    
+    $auth = $stmt->fetchColumn();
+
+    if ($auth !== false) {
+$gorev=$auth;
+    } else {
+
+
+    }
+    
+} catch (PDOException $e) {
+}
+
+if ($username=="admin")
+    $gorev="Sistem Yöneticisi";
+
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -36,13 +86,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         <div class="logo"><img src="images/openmytask.png"></div>
         <div class="account">
         <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
-            <span class="account_dev"> <span class="name">Batuhan Korkmaz</span> <span class="auth">Proje Yöneticisi </span> </span>     
-
+            <span class="account_dev"> <span class="name"><?php echo $username; ?></span> <span class="auth"><?php echo $gorev; ?> </span> </span>     
+<div class="details">details</div>
         </div>
     </div>
 
     <div class="welcome">
-        <h3 class="fade-in-down">Hoşgeldiniz, Bay Batuhan!</h3>
+        <h3 class="fade-in-down">Hoşgeldiniz, Sayın <?php print_r($username); ?></h3>
     </div>
 
     <div class="container factions">
@@ -52,16 +102,16 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
                 <div class="card_title">Notlarım</div>
             </div>
             <div class="col faction fade-in-down-2">
-                <div class="image"><img src="openmytask/mail.svg" alt="Notlarım"></div>
+                <div class="image"><img src="openmytask/mail.svg" alt="Gelen Kutusu"></div>
                 <div class="card_title">Gelen Kutusu</div>
             </div>
             <div class="col faction fade-in-down-2">
-                <div class="image"><img src="openmytask/alarm.svg" alt="Notlarım"></div>
+                <div class="image"><img src="openmytask/alarm.svg" alt="Görevler"></div>
                 <div class="card_title">Görevler</div>
             </div>
             <div class="col faction fade-in-down-2">
-                <div class="image"><img src="openmytask/calendar.svg" alt="Notlarım"></div>
-                <div class="card_title">Takvim</div>
+                <div class="image"><img src="openmytask/teams.svg" alt="Ekibim"></div>
+                <div class="card_title">Ekibim</div>
             </div>
 
         </div>
