@@ -273,21 +273,98 @@ align-items: center;
     background: #fffff8;
     cursor: pointer;
 }
-.details{
-    display: none;
-    transition-delay: 0s, 0.5s; 
-
-
-}
-.account:hover .details{
-    display: block;
-    height: 150px;
-    background: #dedede;
+.details {
+    display: flex;
+    height: 0;
+    overflow: hidden;
+    background: #ffffff;
     width: 130px;
+    box-shadow: 1px 1px 6px 1px #f3f3f3;
     border-radius: 10px 0px 10px 10px;
-    margin-top: 215px;
+    margin-top: 115px;
+    z-index: -10;
     position: absolute;
-    transition-delay: 0s, 0.5s; /* 0.5s delay for color */
+    transition: height 0.5s ease-out;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+.inlinebutton{
+    margin-bottom: 3px;
+    display: flex;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 1px 1px 5px 0px #9d9d9d;
+    font-size: 12px;
+    font-family: 'Montserrat';
+    color: #fff;
+    border-radius: 200px;
+
+    width: 90%;
+    height: 25px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.darkblue{
+    background: #08235c;
+}
+.mavi {
+    background: #0d71ee;
+}
+
+.account input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+  
+  .account label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 200px;
+    height: 100px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+  }
+  
+  .account label:after {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 90px;
+    height: 90px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+  }
+  
+  .account input:checked + label {
+    background: #bada55;
+  }
+  
+  .account input:checked + label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+  }
+  
+  .account label:active:after {
+    width: 130px;
+  }
+  
+
+
+
+.account:hover .details {
+    height: 150px;
+}
+.account:hover
+{
+    box-shadow: 0px 4px 3px 0px #d1d1d1;
 }
 .account_dev {
     display: flex;

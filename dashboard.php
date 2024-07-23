@@ -1,12 +1,12 @@
-<?php 
+<?php
 session_start();
-$username="{username}";
-$gorev="{yetki}";
+$username = "{username}";
+$gorev = "{yetki}";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    $username=$_SESSION['username'];
+    $username = $_SESSION['username'];
 } else {
-     header("Location: login.php");
-     die();
+    header("Location: login.php");
+    die();
 }
 
 
@@ -34,27 +34,24 @@ try {
 
 try {
     $sql = "SELECT gorev FROM users WHERE username = :username";
-    
+
     $stmt = $pdo->prepare($sql);
-    
+
     $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-    
+
     $stmt->execute();
-    
+
     $auth = $stmt->fetchColumn();
 
     if ($auth !== false) {
-$gorev=$auth;
+        $gorev = $auth;
     } else {
-
-
     }
-    
 } catch (PDOException $e) {
 }
 
-if ($username=="admin")
-    $gorev="Sistem Yöneticisi";
+if ($username == "admin")
+    $gorev = "Sistem Yöneticisi";
 
 ?>
 <!DOCTYPE html>
@@ -77,7 +74,7 @@ if ($username=="admin")
 
 
     <title>Dashboard</title>
-  
+
 </head>
 
 <body>
@@ -85,9 +82,15 @@ if ($username=="admin")
     <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png"></div>
         <div class="account">
-        <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
-            <span class="account_dev"> <span class="name"><?php echo $username; ?></span> <span class="auth"><?php echo $gorev; ?> </span> </span>     
-<div class="details">details</div>
+            <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
+            <span class="account_dev" id="hesabim"> <span class="name"><?php echo $username; ?></span> <span class="auth"><?php echo $gorev; ?> </span> </span>
+            <div class="details"><span class="inlinebutton mavi">Hesabım</span>
+            <span class="inlinebutton darkblue">Çıkış Yap</span>
+            <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+
+            </div>
+
+
         </div>
     </div>
 
@@ -117,24 +120,24 @@ if ($username=="admin")
         </div>
     </div>
 
-    <?php 
-$dsn = 'mysql:host=localhost;dbname=openmytask';
-$username = 'root';
-$password = '';
+    <?php
+    $dsn = 'mysql:host=localhost;dbname=openmytask';
+    $username = 'root';
+    $password = '';
 
-try {
-    // PDO örneği oluştur
-    $pdo = new PDO($dsn, $username, $password);
+    try {
+        // PDO örneği oluştur
+        $pdo = new PDO($dsn, $username, $password);
 
-    // Hata modu ayarla (Hataları exception olarak fırlatır)
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        // Hata modu ayarla (Hataları exception olarak fırlatır)
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // echo "Veritabanı bağlantısı başarılı!";
-} catch (PDOException $e) {
-    // echo "Veritabanı bağlantısı başarısız: " . $e->getMessage();
-}
+        // echo "Veritabanı bağlantısı başarılı!";
+    } catch (PDOException $e) {
+        // echo "Veritabanı bağlantısı başarısız: " . $e->getMessage();
+    }
 
-?>
+    ?>
 
 
 
@@ -193,5 +196,9 @@ try {
         </div>
       </div>
     </div> -->
+    <script>
+
+    </script>
+</body>
 
 </html>
