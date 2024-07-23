@@ -285,13 +285,13 @@ align-items: center;
     z-index: -10;
     position: absolute;
     transition: height 0.5s ease-out;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     align-content: center;
     flex-direction: column;
 }
 .inlinebutton{
-    margin-bottom: 3px;
+    margin-bottom: 5px;
     display: flex;
     text-align: center;
     font-weight: 600;
@@ -300,67 +300,60 @@ align-items: center;
     font-family: 'Montserrat';
     color: #fff;
     border-radius: 200px;
-
-    width: 90%;
-    height: 25px;
+    width: 80%;
+    height: 35px;
     align-content: center;
     justify-content: center;
     align-items: center;
 }
 .darkblue{
-    background: #08235c;
+    background: linear-gradient(#7ad6ff, #2694b4);
+
+}
+.account-edit-tab{
+    display: flex;
+    height: 450px;
+    width: 100%;
+    top: 150px;
+    position: absolute;
+    align-content: center;
+    justify-content: center;
+}
+.account-edit-menu{
+    font-family: Montserrat;
+    border-radius: 10px;
+    width: 80%;
+    font-weight: 500;
+    box-shadow: 1px 1px 9px 0px #ebebeb;
+    background: #fff;
+}
+.details a{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+}
+.darkblue:hover{
+    background: linear-gradient(#002bff, #000000);
+    transition: background 0.2s ease-out;
+
 }
 .mavi {
-    background: #0d71ee;
+    background: linear-gradient(#91d4e8, #0067ff);
 }
+.mavi:hover{
+    background: linear-gradient(#7583cf, #166ad3);
+    transition: background 0.1s ease-out;
 
-.account input[type=checkbox] {
-    height: 0;
-    width: 0;
-    visibility: hidden;
-  }
-  
-  .account label {
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 200px;
-    height: 100px;
-    background: grey;
-    display: block;
-    border-radius: 100px;
-    position: relative;
-  }
-  
-  .account label:after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 90px;
-    height: 90px;
-    background: #fff;
-    border-radius: 90px;
-    transition: 0.3s;
-  }
-  
-  .account input:checked + label {
-    background: #bada55;
-  }
-  
-  .account input:checked + label:after {
-    left: calc(100% - 5px);
-    transform: translateX(-100%);
-  }
-  
-  .account label:active:after {
-    width: 130px;
-  }
-  
+}
 
 
 
 .account:hover .details {
     height: 150px;
+  
+
 }
 .account:hover
 {

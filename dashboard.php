@@ -1,5 +1,7 @@
 <?php
 session_start();
+session_regenerate_id(true);
+
 $username = "{username}";
 $gorev = "{yetki}";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
@@ -84,9 +86,9 @@ if ($username == "admin")
         <div class="account">
             <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
             <span class="account_dev" id="hesabim"> <span class="name"><?php echo $username; ?></span> <span class="auth"><?php echo $gorev; ?> </span> </span>
-            <div class="details"><span class="inlinebutton mavi">Hesabım</span>
-            <span class="inlinebutton darkblue">Çıkış Yap</span>
-            <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+            <div class="details">
+               <a href="account.php"><span class="inlinebutton mavi">Hesabım</span></a> 
+               <a href="logout.php"> <span class="inlinebutton darkblue">Çıkış Yap</span></a>
 
             </div>
 

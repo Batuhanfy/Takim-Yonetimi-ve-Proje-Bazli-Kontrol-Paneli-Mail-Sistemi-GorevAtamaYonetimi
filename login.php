@@ -29,6 +29,8 @@ $pass = ''; // Veritabanı şifresi
         if($username == "admin" && $password == "admin") { // dikkat
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
+            header('Location: dashboard.php');
+
         }
 
 
@@ -74,7 +76,7 @@ $pass = ''; // Veritabanı şifresi
 
 <body>
 
-    <body>
+
 
         <div class="headings_login fade-in-down-4">
             <div class="logo"><img src="images/openmytask_2.png"></div>
