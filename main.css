@@ -310,17 +310,112 @@ align-items: center;
     background: linear-gradient(#7ad6ff, #2694b4);
 
 }
+.butonlar-notes{
+    display: flex;
+    width: 80%;
+    justify-content: flex-end;
+
+}
+.add-note img{
+    margin-right: 5px;
+    height: 20px;
+}
+.add-note{
+    display: flex;
+    box-shadow: 1px 1px 8px 0px #cacaca;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #000;
+    background: #ffffff;
+    border: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.add-note:hover{
+    background:#f6f6f6;
+}
+
+
+
+.delete-note img{
+    margin-right: 5px;
+    height: 20px;
+}
+.delete-note {
+    margin-right: 10px;
+    display: none;
+    box-shadow: 1px 1px 8px 0px #cacaca;
+    width: 130px;
+    height: 30px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #fff;
+    background: #ff0000;
+    border: none;
+    justify-content: center;
+    align-items: center;
+
+}
+#addNoteDiv {
+    font-family: Montserrat;
+    box-shadow: 1px 1px 4px 3px #e7e7e7;
+   
+    background: #fff;
+    top: 20%;
+    left: 35%;
+    width: 500px;
+    height: 250px;
+    position: absolute;
+     display: none; 
+    margin-top: 20px;
+    padding: 10px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+.delete-note:hover{
+    background:#550303;
+}
+
+
+.butonlar-notes{
+    margin-bottom: 20px;
+}
 .account-edit-tab{
     z-index: -10;
     display: flex;
     height: 450px;
     width: 100%;
-    top: 170px;
+    top: 30px;
     position: absolute;
+    flex-direction: column;
     align-content: center;
     justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+
+}
+.my-notes-menu .text{
+    font-weight: 700;
 }
 .account-edit-menu{
+    padding: 30px;
+    font-family: Montserrat;
+    border-radius: 10px;
+    width: 80%;
+    font-weight: 500;
+    box-shadow: 1px 1px 9px 0px #ebebeb;
+    background: #fff;
+}
+.my-notes-menu{
+    margin-bottom: 15px;
     padding: 30px;
     font-family: Montserrat;
     border-radius: 10px;
@@ -332,6 +427,11 @@ align-items: center;
 .baslik img{
     height:25px;
 }
+ .selected_note{
+    border: 2px solid blue; 
+
+}
+
 .details a{
     display: flex;
     width: 100%;

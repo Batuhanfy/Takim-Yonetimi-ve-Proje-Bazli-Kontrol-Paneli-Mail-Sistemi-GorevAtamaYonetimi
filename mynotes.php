@@ -1,6 +1,5 @@
 
 <!DOCTYPE html>
-<!DOCTYPE html>
 <?php session_start();
 session_regenerate_id(true);
 
@@ -39,9 +38,9 @@ try {
     throw new PDOException($e->getMessage(), (int)$e->getCode());
 }
 
+$pdo = new PDO('mysql:host=localhost;dbname=openmytask', 'root', '');
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=openmytask', 'root', '');
 
     $sql = "SELECT * FROM users WHERE username = :username";
     $stmt = $pdo->prepare($sql);
@@ -71,9 +70,25 @@ try {
             $yetki = $row['yetki'];
         } else {
         }
+
     }
+
+ 
+
+
 } catch (PDOException $e) {
 }
+
+$sql = "SELECT note, date,id FROM mynotes WHERE user = :username";
+
+$stmt = $pdo->prepare($sql);
+
+$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+
+$stmt->execute();
+
+$notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
 if ($username == "admin")
     $gorev = "Sistem Yöneticisi";
@@ -120,25 +135,161 @@ if ($username == "admin")
 
 
 
+    <div id="addNoteDiv" class="mt-3">
 
+            <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea>
+            <button id="saveNoteButton" class="btn btn-success">Kaydet</button>
+        </div>
+
+    
 
     <div class="account-edit-tab fade-in-down-4">
-        <div class="account-edit-menu" id="account-edit">
+    <div class="butonlar-notes">
+    <span><span class="delete-note" id="deleteNote"><img src="openmytask/delete.svg" alt="Sil">Seçili Notu Sil</span></span>
+        <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Not Ekle</span></span>
+    </div>
+    <?php 
+foreach ($notes as $note) {
+    ?>
+        <div class="my-notes-menu" id="<?php print_r($note['id']); ?>">
 
-            <div class="container text-center">
-                <div class="row">
-                    <div class="col">
-                        <span class="baslik"><img src="openmytask/user-card.svg" alt="Kullanıcı Adı"> Kullanıcı Adınız:</span>
-                        <span class="text"><?php echo $username; ?></span>
+       
+<div class="container text-center">
+  <div class="row">
+    <div class="col">
+    <span class="baslik"><?php echo $note['note']; ?></span>
+    </div>
+    <div class="col">
+    <span class="text">Tarih: <?php echo $note['date']; ?></span>
+    </div>
+ 
+  </div>
+</div>
 
-                    </div>
-        
-                </div>
-
-             
-
-                </div>
             </div>
-        </div>
+
+           
+
+
+
+        
+        <?php } ?>
+    </div>
+    <script>
+
+        const myNotesDivs = document.querySelectorAll('.my-notes-menu');
+        const deleteButton = document.getElementById('deleteNote');
+        let selectedNoteId = null;
+        const addNoteButton = document.getElementById('addNoteButton');
+        const addNoteDiv = document.getElementById('addNoteDiv');
+        const saveNoteButton = document.getElementById('saveNoteButton');
+
+        
+        addNoteButton.addEventListener('click', () => {
+            addNoteDiv.style.display = 'flex';
+        });
+
+       
+        myNotesDivs.forEach(div => {
+            div.addEventListener('click', () => {
+              
+                myNotesDivs.forEach(d => d.classList.remove('selected_note'));
+
+                
+                div.classList.add('selected_note');
+
+               
+                console.log(div.id);
+
+
+                selectedNoteId = div.id;
+                deleteButton.style.display = 'flex';
+            });
+        });
+
+
+        deleteButton.addEventListener('click', () => {
+            if (selectedNoteId && confirm("Bu notu silmek istediğinize emin misiniz?")) {
+
+
+                const noteToDelete = document.getElementById(selectedNoteId);
+                if (noteToDelete) {
+                    
+                fetch('delete_note.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: selectedNoteId })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const noteToDelete = document.getElementById(selectedNoteId);
+                        if (noteToDelete) {
+                            noteToDelete.remove();
+                        }
+                        deleteButton.style.display = 'none';
+                        selectedNoteId = null;
+                    } else {
+                        alert('Not silinirken bir hata oluştu.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                }
+                
+                deleteButton.style.display = 'none';
+                selectedNoteId = null;
+            }
+        });
+
+
+        saveNoteButton.addEventListener('click', () => {
+            const newNote = document.getElementById('newNote').value;
+            if (newNote.trim() !== "") {
+                fetch('add_note.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ note: newNote })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Yeni notu sayfada gösterme
+                        const newNoteDiv = document.createElement('div');
+                        newNoteDiv.className = 'my-notes-menu';
+                        newNoteDiv.id = data.id;
+                        newNoteDiv.textContent = newNote;
+                        document.querySelector('.container').appendChild(newNoteDiv);
+                        addNoteDiv.style.display = 'none';
+                        document.getElementById('newNote').value = '';
+
+                        // Yeni not div'ine tıklama olayı ekleyin
+                        newNoteDiv.addEventListener('click', () => {
+                            myNotesDivs.forEach(d => d.classList.remove('selected'));
+                            newNoteDiv.classList.add('selected');
+                            selectedNoteId = newNoteDiv.id;
+                            deleteButton.style.display = 'block';
+                        });
+                    } else {
+                        alert('Not eklenirken bir hata oluştu.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Not boş olamaz.');
+            }
+        });
+    </script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+
 </body>
-</html>
+
+
+                        
