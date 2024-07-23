@@ -48,6 +48,10 @@ try {
 
         if (isset($row['yetki']) && $row['yetki'] !== false) {
             $yetki = $row['yetki'];
+            if ($yetki != "Admin") {
+                header("Location: dashboard.php");
+                die();
+            }
         } else {
         }
     }
@@ -82,6 +86,10 @@ if ($username == "admin")
 
 <body>
 
+    <div class="welcome-admin">
+        <h3 class="fade-in-down">Yönetici Paneline Hoşgeldiniz, Sayın <?php print_r($username); ?></h3>
+    </div>
+
     <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png" onClick="window.location.href='dashboard.php'"></div>
         <div class="account">
@@ -94,54 +102,46 @@ if ($username == "admin")
         </div>
     </div>
 
-    <div class="account-edit-tab fade-in-down-4">
+    <div class="account-edit-tab-admin fade-in-down-4">
         <div class="account-edit-menu" id="account-edit">
 
             <div class="container text-center">
-                <div class="row">
-                    <div class="col">
-                        <span class="baslik"><img src="openmytask/user-card.svg" alt="Kullanıcı Adı"> Kullanıcı Adınız:</span>
-                        <span class="text"><?php echo $username; ?></span>
+                <div class="row uyeler-1">
+                    <H3>Üyeler</H3>
+                    <?php
+                    $sql = "SELECT username, password, email, telefon, gorev, isim FROM users";
 
-                    </div>
-                    <div class="col">
-                        <span class="baslik"><img src="openmytask/mail.svg" alt="Mail Adresi"> Mail Adresiniz:</span>
-                        <span class="text"> <?php echo $mail; ?></span>
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute();
 
-                    </div>
-                    <div class="col">
-                        <span class="baslik"><img src="openmytask/telephone.svg" alt="Telefon">Telefon Numaranız:</span>
-                        <span class="text"> <?php echo $telefon; ?></span>
-                    </div>
+                    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    ?>
+                    <?php
+
+                    if (!empty($users)) {
+                        foreach ($users as $user) {
+                    ?>
+                            <div class="col" style="margin-bottom:10px;">
+                                <span class="text"><?php echo " - Kullanıcı Adı: " . htmlspecialchars($user['username'])  ?> </span>
+                                <span class="text"><?php echo " - Şifre: " .  htmlspecialchars($user['password'])  ?> </span>
+                                <span class="text"><?php echo " - E-Mail: " . htmlspecialchars($user['email'])  ?> </span>
+                                <span class="text"><?php echo " - Telefon: " . htmlspecialchars($user['telefon'])  ?> </span>
+                                <span class="text"><?php echo "- Görev: " . htmlspecialchars($user['gorev'])  ?> </span>
+
+                           
+
+     
+                            </div>
+
+
+                    <?php  }
+                    } else {
+                        
+                    } ?>
                 </div>
 
-                <div class="row" style="margin-top:50px;">
-                    <div class="col">
-                        -
-
-                    </div>
-                    <div class="col">
-                        <span class="baslik"><img src="openmytask/permission.svg" alt="Telefon"></span>
-                        <span class="text"> <?php echo $gorev; ?></span>
-                    </div>
-                    <div class="col">
-                        -
-                    </div>
-
-                </div>
-                <div class="row" style="margin-top:50px;">
-                    <div class="col">
-
-
-                    </div>
-                    <div class="col">
-
-                    </div>
-                    <div class="col">
-
-                    </div>
-
-                </div>
+            
             </div>
         </div>
 </body>

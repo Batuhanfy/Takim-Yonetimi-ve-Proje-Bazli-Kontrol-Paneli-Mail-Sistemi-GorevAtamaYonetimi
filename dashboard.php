@@ -2,6 +2,13 @@
 session_start();
 session_regenerate_id(true);
 
+require 'database.php';
+
+
+$mail = "{mail}";
+$telefon = "{telefon}";
+$yetki = "{yetki}";
+
 $username = "{username}";
 $gorev = "{yetki}";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
@@ -13,25 +20,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
 
 
-$host = 'localhost';
-$db = 'openmytask';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    throw new PDOException($e->getMessage(), (int)$e->getCode());
-}
 
 
 try {
@@ -79,11 +67,47 @@ if ($username == "admin")
 </head>
 
 <body>
+  <?php 
+
+try {
+
+  $sql = "SELECT * FROM users WHERE username = :username";
+  $stmt = $pdo->prepare($sql);
+  $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+  $stmt->execute();
+
+  $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+  foreach ($rows as $row) {
+      if (isset($row['gorev']) && $row['gorev'] !== false) {
+          $gorev = $row['gorev'];
+      } else {
+      }
+
+      if (isset($row['email']) && $row['email'] !== false) {
+          $mail = $row['email'];
+      } else {
+      }
+
+      if (isset($row['telefon']) && $row['telefon'] !== false) {
+          $telefon = $row['telefon'];
+      } else {
+      }
+
+      if (isset($row['yetki']) && $row['yetki'] !== false) {
+          $yetki = $row['yetki'];
+      } else {
+      }
+  }
+} catch (PDOException $e) {
+}
+  ?>
 
     <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png"></div>
         <div class="account">
-            <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
+            <span class="account_dev"><img src="openmytask/user.svg" alt="User"></span>
             <span class="account_dev" id="hesabim"> <span class="name"><?php echo $username; ?></span> <span class="auth"><?php echo $gorev; ?> </span> </span>
             <div class="details">
                <a href="account.php"><span class="inlinebutton mavi">Hesabım</span></a> 
@@ -101,11 +125,17 @@ if ($username == "admin")
 
     <div class="container factions">
         <div class="row">
+          <?php if($yetki == "Admin"){?>
+<div class="col faction fade-in-down-2 " onClick="window.location.href = 'admin.php';">
+<div class="image"><img src="openmytask/admin.svg" alt="Admin"></div>
+<div class="card_title">Admin</div>
+</div>
+        <?php } ?>
             <div class="col faction fade-in-down-2 " onClick="window.location.href = 'mynotes.php';">
                 <div class="image"><img src="openmytask/mynotes.svg" alt="Notlarım"></div>
                 <div class="card_title">Notlarım</div>
             </div>
-            <div class="col faction fade-in-down-2">
+            <div class="col faction fade-in-down-2" onClick="window.location.href = 'gelenkutusu.php';">
                 <div class="image"><img src="openmytask/mail.svg" alt="Gelen Kutusu"></div>
                 <div class="card_title">Gelen Kutusu</div>
             </div>
@@ -121,25 +151,7 @@ if ($username == "admin")
         </div>
     </div>
 
-    <?php
-    $dsn = 'mysql:host=localhost;dbname=openmytask';
-    $username = 'root';
-    $password = '';
-
-    try {
-        // PDO örneği oluştur
-        $pdo = new PDO($dsn, $username, $password);
-
-        // Hata modu ayarla (Hataları exception olarak fırlatır)
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        // echo "Veritabanı bağlantısı başarılı!";
-    } catch (PDOException $e) {
-        // echo "Veritabanı bağlantısı başarısız: " . $e->getMessage();
-    }
-
-    ?>
-
+   
 
 
 

@@ -4,24 +4,25 @@ session_regenerate_id(true);
 
 require 'database.php';
 
-$username="";
+$username = "";
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $username = $_SESSION['username'];
 } else {
-
+    echo json_encode(['success' => false, 'message' => 'Kullanıcı giriş yapmamış.']);
+    exit;
 }
-
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (isset($data['note']) && !empty($data['note'])) {
+if (isset($data['note']) && !empty($data['note']) && isset($data['kime']) && !empty($data['kime'])) {
     $note = $data['note'];
-   $ids=rand(1,5000);
-    $sql = "INSERT INTO mynotes (id,user,note, date) VALUES (:id,:user,:note, NOW())";
+    $kime = $data['kime'];
+
+    $sql = "INSERT INTO mymails (user, kime, note, date) VALUES (:user, :kime, :note, NOW())";
     $stmt = $pdo->prepare($sql);
 
-    $stmt->bindParam(':id', $ids, PDO::PARAM_STR);
     $stmt->bindParam(':user', $username, PDO::PARAM_STR);
+    $stmt->bindParam(':kime', $kime, PDO::PARAM_STR);
     $stmt->bindParam(':note', $note, PDO::PARAM_STR);
 
     try {
@@ -29,9 +30,9 @@ if (isset($data['note']) && !empty($data['note'])) {
         $id = $pdo->lastInsertId();
         echo json_encode(['success' => true, 'id' => $id]);
     } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Not eklenirken bir hata oluştu: ' . $e->getMessage()]);
+        echo json_encode(['success' => false, 'message' => 'Mail gönderilirken bir hata oluştu: ' . $e->getMessage()]);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Not boş olamaz.']);
+    echo json_encode(['success' => false, 'message' => 'Mailboş olamaz.']);
 }
 ?>

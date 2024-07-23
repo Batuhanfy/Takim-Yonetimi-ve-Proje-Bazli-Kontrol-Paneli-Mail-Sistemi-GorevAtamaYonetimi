@@ -8,7 +8,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 if (isset($data['id'])) {
     $id = $data['id'];
 
-    $sql = "DELETE FROM mynotes WHERE id = :id";
+    $sql = "DELETE FROM mymails WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
 

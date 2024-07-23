@@ -64,6 +64,13 @@
     align-content: center;
     align-items: center;
 }
+.welcome-admin {
+    margin-top: 150px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
 .welcome-login {
     top: 1%;
     left: 40%;
@@ -85,6 +92,14 @@
     font-weight: 400;
 
 }
+
+.welcome-admin h3 {
+    font-size:34px;
+    font-family: Montserrat;
+    font-weight: 300;
+
+}
+
 
 .fade-in-down {
     opacity: 0;
@@ -323,7 +338,7 @@ align-items: center;
 .add-note{
     display: flex;
     box-shadow: 1px 1px 8px 0px #cacaca;
-    width: 130px;
+    width: 170px;
     height: 30px;
     border-radius: 5px;
     font-weight: 700;
@@ -366,41 +381,77 @@ align-items: center;
 #addNoteDiv {
     font-family: Montserrat;
     box-shadow: 1px 1px 4px 3px #e7e7e7;
-   
     background: #fff;
     top: 20%;
     left: 35%;
     width: 500px;
     height: 250px;
     position: absolute;
-     display: none; 
+    display: none;
     margin-top: 20px;
     padding: 10px;
+    align-items: center;
     align-content: center;
     justify-content: center;
-    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+
 }
 .delete-note:hover{
     background:#550303;
 }
-
+#saveNoteButton{
+    width: 350px;
+    margin-top: 20px;
+}
+#newNote{
+    height: 100%;
+}
+.ayirici::after{
+        width: 100%;
+        color: #333;
+        content: ' ----------------------------------------------------------------------';
+    
+}
 
 .butonlar-notes{
     margin-bottom: 20px;
 }
+.uyeler-1{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.uyeler-1 .col{
+    display: flex;
+}
 .account-edit-tab{
     z-index: -10;
     display: flex;
-    height: 450px;
+    min-height: 450px;
     width: 100%;
-    top: 30px;
+    top: 20%;
     position: absolute;
     flex-direction: column;
     align-content: center;
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
     align-items: center;
-
+}
+.account-edit-tab-admin{
+    z-index: -10;
+    display: flex;
+    min-height: 450px;
+    width: 100%;
+    top: 30%;
+    position: absolute;
+    flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 .my-notes-menu .text{
     font-weight: 700;

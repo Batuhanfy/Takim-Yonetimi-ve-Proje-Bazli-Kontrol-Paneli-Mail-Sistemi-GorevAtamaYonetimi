@@ -59,7 +59,7 @@ try {
 } catch (PDOException $e) {
 }
 
-$sql = "SELECT note, date,id FROM mynotes WHERE user = :username";
+$sql = "SELECT note, date,id,user FROM mymails WHERE kime = :username";
 
 $stmt = $pdo->prepare($sql);
 
@@ -116,20 +116,18 @@ if ($username == "admin")
 
 
     <div id="addNoteDiv" class="mt-3">
-
-            <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea>
-            <button id="saveNoteButton" class="btn btn-success">Ekle</button>
+    <input id="username_sending" class="form-control mb-2" placeholder="Kime (Username)"></input>
+            <textarea id="newNote" class="form-control mb-2" placeholder="Mesajınızı buraya yazın.."></textarea>
+            <button id="saveNoteButton" class="btn btn-success">Gönder</button>
         </div>
 
     
 
     <div class="account-edit-tab fade-in-down-4">
     <div class="butonlar-notes">
-    <span><span class="delete-note" id="deleteNote"><img src="openmytask/delete.svg" alt="Sil">Seçili Notu Sil</span></span>
-        <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Not Ekle</span></span>
+    <span><span class="delete-note" id="deleteNote"><img src="openmytask/delete.svg" alt="Sil">Seçili Mail Sil</span></span>
+        <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Mail Gönder</span></span>
     </div>
-
-    <div class="ayirici"></div>
     <?php 
 foreach ($notes as $note) {
     ?>
@@ -138,8 +136,11 @@ foreach ($notes as $note) {
        
 <div class="container text-center">
   <div class="row">
+  <div class="col">
+    <span class="baslik">Kimden: <?php echo $note['user']; ?></span>
+    </div>
     <div class="col">
-    <span class="baslik"><?php echo $note['note']; ?></span>
+    <span class="baslik">Mesaj: <?php echo $note['note']; ?></span>
     </div>
     <div class="col">
     <span class="text">Tarih: <?php echo $note['date']; ?></span>
@@ -191,13 +192,13 @@ foreach ($notes as $note) {
 
 
         deleteButton.addEventListener('click', () => {
-            if (selectedNoteId && confirm("Bu notu silmek istediğinize emin misiniz?")) {
+            if (selectedNoteId && confirm("Bu maili silmek istediğinize emin misiniz?")) {
 
 
                 const noteToDelete = document.getElementById(selectedNoteId);
                 if (noteToDelete) {
                     
-                fetch('delete_note.php', {
+                fetch('delete_mail.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -228,37 +229,32 @@ foreach ($notes as $note) {
 
 
         saveNoteButton.addEventListener('click', () => {
-            const newNote = document.getElementById('newNote').value;
-            if (newNote.trim() !== "") {
-                fetch('add_note.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ note: newNote })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload();
+    const newNote = document.getElementById('newNote').value;
+    const kime = document.getElementById('username_sending').value;
 
-
-
-                        newNoteDiv.addEventListener('click', () => {
-                            myNotesDivs.forEach(d => d.classList.remove('selected'));
-                            newNoteDiv.classList.add('selected');
-                            selectedNoteId = newNoteDiv.id;
-                            deleteButton.style.display = 'block';
-                        });
-                    } else {
-                        alert('Not eklenirken bir hata oluştu.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+    if (newNote.trim() !== "" && kime.trim() !== "") {
+        fetch('send_mail.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ note: newNote, kime: kime })
+        })
+        .then(response => response.json()) 
+        .then(data => {
+            if (data.success) {
+                alert("Mailiniz başarıyla gönderildi.");
+                window.location.reload(); 
             } else {
-                alert('Not boş olamaz.');
+                alert('Hata: ' + data.message);
             }
-        });
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+        alert('Not ve kullanıcı adı boş olamaz.');
+    }
+});
+
     </script>
 
 
