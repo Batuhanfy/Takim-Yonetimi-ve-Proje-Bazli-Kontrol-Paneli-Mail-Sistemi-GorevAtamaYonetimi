@@ -42,6 +42,7 @@ $pass = ''; // Veritabanı şifresi
         $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
         $stmt->execute(['username' => $username]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $hashedPassword = $stmt->fetchColumn();
 
 
         if ($result && ($password == $result['password'])) {

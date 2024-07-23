@@ -311,21 +311,26 @@ align-items: center;
 
 }
 .account-edit-tab{
+    z-index: -10;
     display: flex;
     height: 450px;
     width: 100%;
-    top: 150px;
+    top: 170px;
     position: absolute;
     align-content: center;
     justify-content: center;
 }
 .account-edit-menu{
+    padding: 30px;
     font-family: Montserrat;
     border-radius: 10px;
     width: 80%;
     font-weight: 500;
     box-shadow: 1px 1px 9px 0px #ebebeb;
     background: #fff;
+}
+.baslik img{
+    height:25px;
 }
 .details a{
     display: flex;
@@ -348,7 +353,9 @@ align-items: center;
 
 }
 
-
+.account-edit-menu .baslik{
+    font-weight:700;
+}
 
 .account:hover .details {
     height: 150px;

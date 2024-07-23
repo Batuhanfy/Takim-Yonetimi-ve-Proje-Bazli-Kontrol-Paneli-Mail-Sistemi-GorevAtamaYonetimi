@@ -64,7 +64,6 @@ if ($username == "admin")
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="cards.css">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -102,7 +101,7 @@ if ($username == "admin")
 
     <div class="container factions">
         <div class="row">
-            <div class="col faction fade-in-down-2 ">
+            <div class="col faction fade-in-down-2 " onClick="window.location.href = 'mynotes.php';">
                 <div class="image"><img src="openmytask/mynotes.svg" alt="Notlarım"></div>
                 <div class="card_title">Notlarım</div>
             </div>
