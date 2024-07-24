@@ -328,7 +328,7 @@ align-items: center;
 .butonlar-notes{
     display: flex;
     width: 80%;
-    justify-content: flex-end;
+    justify-content: space-between;
 
 }
 .add-note img{
@@ -340,6 +340,7 @@ align-items: center;
     box-shadow: 1px 1px 8px 0px #cacaca;
     width: 170px;
     height: 30px;
+    
     border-radius: 5px;
     font-weight: 700;
     font-size: 14px;
@@ -385,16 +386,39 @@ align-items: center;
     top: 20%;
     left: 35%;
     width: 500px;
-    height: 250px;
+    height: 350px;
     position: absolute;
     display: none;
     margin-top: 20px;
-    padding: 10px;
     align-items: center;
     align-content: center;
     justify-content: center;
     flex-wrap: nowrap;
     flex-direction: column;
+
+}
+.info-text{
+    font-family: Montserrat;
+    float: left;
+}
+.mailler{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.gelenkutusu{
+
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
 
 }
 .delete-note:hover{
@@ -454,7 +478,12 @@ align-items: center;
     align-items: center;
 }
 .my-notes-menu .text{
-    font-weight: 700;
+    font-weight: 300;
+    float: right;
+
+}
+.my-notes-menu img{
+    height: 10px;
 }
 .account-edit-menu{
     padding: 30px;
@@ -466,20 +495,62 @@ align-items: center;
     background: #fff;
 }
 .my-notes-menu{
+    cursor: pointer;
+    display: flex;
+    height: 10px;
     margin-bottom: 15px;
     padding: 30px;
     font-family: Montserrat;
-    border-radius: 10px;
+
     width: 80%;
+    font-size: 14px;
+    box-shadow: 0px 10px 0px 2px #e0e0e0;
     font-weight: 500;
-    box-shadow: 1px 1px 9px 0px #ebebeb;
     background: #fff;
+    align-items: center;
+}
+
+.okunmadi{
+    margin-right: 10px;
+}
+.my-notes-menu .col{
+    display: flex;
+    width: 250px;
+    flex: 1 0 0%;
+    align-items: center;
+    justify-content: center;
 }
 .baslik img{
     height:25px;
 }
+.overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
+}
+
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    height: 80%;
+    width: 60%;
+    border-radius: 5px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    text-align: center;
+}
  .selected_note{
     border: 2px solid blue; 
+
+}
+.col .baslik{
+    font-weight: 700;
 
 }
 
@@ -504,6 +575,18 @@ align-items: center;
 
 }
 
+.no-notes{
+    display: flex;
+    font-family: Montserrat;
+    height: 150px;
+    width: 80%;
+    background: #fff;
+    box-shadow: 0px 4px 3px 0px #d1d1d1;
+    border-radius: 30px;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
 .account-edit-menu .baslik{
     font-weight:700;
 }
@@ -528,6 +611,32 @@ align-content: center;
 justify-content: center;
 align-items: flex-start;
 }
+.popup-content button{
+    position: absolute;
+    left: 50%;
+    bottom: 10%;
+    transform: translate(-50%, -50%);
+    height: 50px;
+    width: 350px;
+    font-family: Montserrat;
+    color: white;
+    background: #2a351c;
+}
+
+.notification-badge {
+    margin-top: 15px;
+    font-family: Montserrat;
+    box-shadow: 1px 1px 0px 0px #858585;
+    background-color: #5aabff;
+    color: white;
+    padding: 7px 12px;
+    font-size: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
 .account_dev .name{
     font-weight:400;
 }

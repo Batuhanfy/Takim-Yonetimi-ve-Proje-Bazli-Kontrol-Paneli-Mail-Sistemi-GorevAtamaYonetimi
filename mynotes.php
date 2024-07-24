@@ -116,9 +116,8 @@ if ($username == "admin")
 
 
     <div id="addNoteDiv" class="mt-3">
-
-            <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea>
-            <button id="saveNoteButton" class="btn btn-success">Ekle</button>
+   <?php require('quill.php'); ?>
+           <!-- <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea> -->
         </div>
 
     
@@ -129,7 +128,7 @@ if ($username == "admin")
         <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Not Ekle</span></span>
     </div>
 
-    <div class="ayirici"></div>
+ 
     <?php 
 foreach ($notes as $note) {
     ?>
@@ -155,7 +154,10 @@ foreach ($notes as $note) {
 
 
         
-        <?php } ?>
+        <?php }if ($notes == null){
+        print_r("<div class='no-notes'><h3> Not girişi yok.</h3></div>");
+        
+        } ?>
     </div>
     <script>
 

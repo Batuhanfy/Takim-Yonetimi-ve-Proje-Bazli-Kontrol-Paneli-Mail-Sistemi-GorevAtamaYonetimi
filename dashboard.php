@@ -8,6 +8,7 @@ require 'database.php';
 $mail = "{mail}";
 $telefon = "{telefon}";
 $yetki = "{yetki}";
+$unread_mail =0;
 
 $username = "{username}";
 $gorev = "{yetki}";
@@ -71,6 +72,17 @@ if ($username == "admin")
 
 try {
 
+  $sqlmail = "SELECT COUNT(*) FROM mymails WHERE user = :username and okundu=0";
+  $stmtmail = $pdo->prepare($sqlmail);
+  $stmtmail->bindParam(':username', $username, PDO::PARAM_STR);
+  $stmtmail->execute();
+  
+  $okunmamis_mailler = $stmtmail->fetchColumn();
+  $unread_mail=$okunmamis_mailler;
+
+
+
+
   $sql = "SELECT * FROM users WHERE username = :username";
   $stmt = $pdo->prepare($sql);
   $stmt->bindParam(':username', $username, PDO::PARAM_STR);
@@ -116,6 +128,8 @@ try {
             </div>
 
 
+
+
         </div>
     </div>
 
@@ -138,6 +152,7 @@ try {
             <div class="col faction fade-in-down-2" onClick="window.location.href = 'gelenkutusu.php';">
                 <div class="image"><img src="openmytask/mail.svg" alt="Gelen Kutusu"></div>
                 <div class="card_title">Gelen Kutusu</div>
+                <?php if ($unread_mail>0){?><span class="notification-badge"><?php echo $unread_mail; ?> Yeni Mesaj</span> <?php }?>
             </div>
             <div class="col faction fade-in-down-2">
                 <div class="image"><img src="openmytask/alarm.svg" alt="Görevler"></div>

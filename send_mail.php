@@ -14,15 +14,22 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (isset($data['note']) && !empty($data['note']) && isset($data['kime']) && !empty($data['kime'])) {
+if (isset($data['note']) && !empty($data['note']) && isset($data['kime']) && !empty($data['kime']) && !empty($data['konu']) ) {
     $note = $data['note'];
     $kime = $data['kime'];
+    $konu = $data['konu'];
 
-    $sql = "INSERT INTO mymails (user, kime, note, date) VALUES (:user, :kime, :note, NOW())";
+
+    $sql = "INSERT INTO mymails (id,user, kime, note,konu) VALUES (:id,:user, :kime, :note,:konu)";
     $stmt = $pdo->prepare($sql);
 
+    $ids=rand(1,5000);
+    
+    $stmt->bindParam(':id', $ids, PDO::PARAM_STR);
     $stmt->bindParam(':user', $username, PDO::PARAM_STR);
     $stmt->bindParam(':kime', $kime, PDO::PARAM_STR);
+    $stmt->bindParam(':konu', $konu, PDO::PARAM_STR);
+
     $stmt->bindParam(':note', $note, PDO::PARAM_STR);
 
     try {
