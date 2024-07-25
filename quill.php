@@ -1,28 +1,23 @@
 <?php
+
+session_regenerate_id(true);
+require 'database.php';
+
 if ($_POST) {
     $metin = $_POST["metin"];
     echo "<div class='ortala' style='height: unset; color: red'><b>Quil Editor den gelen değer:</b></div>";
     echo "<div class='ortala' style='height: unset'>$metin</div>";
 } ?>
 
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quill Editor</title>
+
 
     <!-- Include quill editor stylesheet -->
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
 
 
-</head>
 
-<form method="post" class="ortala" style="    height: 100%;
-    position: absolute;
-    top: 0;
-">
+
+
 
 <div id="quilleditor"></div>
     <input type="hidden" id="newNote" name="metin">
@@ -30,7 +25,7 @@ if ($_POST) {
     <button id="saveNoteButton" class="btn btn-success">Ekle</button>
 
 
-</form>
+
 
 
 

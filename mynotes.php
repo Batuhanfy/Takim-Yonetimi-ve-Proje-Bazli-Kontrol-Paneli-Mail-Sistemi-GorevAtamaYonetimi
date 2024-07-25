@@ -88,6 +88,7 @@ if ($username == "admin")
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Notes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -253,15 +254,10 @@ foreach ($notes as $note) {
                     if (data.success) {
                       
 
-
-
-                        newNoteDiv.addEventListener('click', () => {
-                            myNotesDivs.forEach(d => d.classList.remove('selected'));
-                            newNoteDiv.classList.add('selected');
-                            selectedNoteId = newNoteDiv.id;
-                            deleteButton.style.display = 'block';
+                            
                             window.location.reload();
-                        });
+                            
+                        
                     } else {
                         alert('Not eklenirken bir hata oluştu.');
                     }

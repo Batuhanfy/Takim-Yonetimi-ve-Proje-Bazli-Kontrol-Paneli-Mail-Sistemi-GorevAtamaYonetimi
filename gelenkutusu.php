@@ -223,11 +223,10 @@ Okundu
         });
       function mailgonderkutusu(isim){
         addNoteDiv.style.display = 'flex';
-       alert(isim);
-       document.getElementById('username_sending').innerText="sadasd";
+      
 
-document.querySelector('.form-control.mb-2.gonderilecek').ariaPlaceholder="asdasdas";
-       
+     
+       document.getElementById('username_sending').value = isim;
     
       }
        

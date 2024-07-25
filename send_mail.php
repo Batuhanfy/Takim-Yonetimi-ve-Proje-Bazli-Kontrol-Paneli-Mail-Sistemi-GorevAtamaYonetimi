@@ -12,13 +12,34 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     exit;
 }
 
+
+
 $data = json_decode(file_get_contents('php://input'), true);
+
+
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
+    $username = $_SESSION['username'];
+} else {
+    echo json_encode(['success' => false, 'message' => 'Kullanıcı giriş yapmamış.']);
+    exit;
+}
 
 if (isset($data['note']) && !empty($data['note']) && isset($data['kime']) && !empty($data['kime']) && !empty($data['konu']) ) {
     $note = $data['note'];
     $kime = $data['kime'];
     $konu = $data['konu'];
 
+
+    $sql5 = "select count(*) from users where username=:user";
+    $stmt5 = $pdo->prepare($sql5);
+    $stmt5->bindParam(':user', $kime, PDO::PARAM_STR);
+    $stmt5->execute();
+    $isuser = $stmt5->fetchColumn();
+
+   if($isuser <= 0){
+    echo json_encode(['success'=> false,'message'=> 'Kullanıcı Mevcut Değil']);
+    exit;
+   }
 
     $sql = "INSERT INTO mymails (id,user, kime, note,konu) VALUES (:id,:user, :kime, :note,:konu)";
     $stmt = $pdo->prepare($sql);
