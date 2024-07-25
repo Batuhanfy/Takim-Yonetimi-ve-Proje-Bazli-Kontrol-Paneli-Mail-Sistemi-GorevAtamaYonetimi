@@ -174,7 +174,8 @@ try {
                 <div class="image"><img src="openmytask/alarm.svg" alt="Görevler"></div>
                 <div class="card_title">Görevler</div>
             </div>
-            <div class="col faction fade-in-down-2">
+
+            <div class="col faction fade-in-down-2" onClick="window.location.href = 'ekibim.php';">
                 <div class="image"><img src="openmytask/teams.svg" alt="Ekibim"></div>
                 <div class="card_title">Ekibim</div>
             </div>

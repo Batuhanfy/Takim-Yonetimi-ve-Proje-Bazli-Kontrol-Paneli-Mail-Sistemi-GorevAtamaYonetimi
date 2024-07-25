@@ -19,11 +19,10 @@ if ($_POST) {
 
 
 
-<div id="quilleditor"></div>
+<div id="quilleditor" style="width:100%"></div>
     <input type="hidden" id="newNote" name="metin">
     <!-- <button type="submit" class="buton">GÖNDER</button> -->
     <button id="saveNoteButton" class="btn btn-success">Ekle</button>
-
 
 
 

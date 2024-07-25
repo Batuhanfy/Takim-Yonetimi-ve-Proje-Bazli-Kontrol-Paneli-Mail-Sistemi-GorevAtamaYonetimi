@@ -422,10 +422,22 @@ align-items: center;
     align-items: center;
 
 }
+.no-ekip{
+    position: absolute;
+    left: 50%;
+    font-family: 'Montserrat';
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
 .delete-note:hover{
     background:#550303;
 }
 #saveNoteButton{
+    transform: translate(-50%, -50%);
+    bottom: -50px;
+    left: 50%;
+    font-family: Montserrat;
+    position: absolute;
     width: 350px;
     margin-top: 20px;
 }
