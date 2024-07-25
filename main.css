@@ -352,6 +352,30 @@ align-items: center;
     align-items: center;
 
 }
+.sendmailekip{
+    padding: 10px;
+    display: flex;
+    box-shadow: 1px 1px 8px 0px #cacaca;
+    height: 30px;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: Montserrat;
+    color: #000;
+    background: #ffffff;
+    border: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.sendmailekip img{
+    margin-right: 5px;
+    height: 20px;
+}
+.sendmailekip:hover{
+    background:#f6f6f6;
+}
+
 .add-note:hover{
     background:#f6f6f6;
 }

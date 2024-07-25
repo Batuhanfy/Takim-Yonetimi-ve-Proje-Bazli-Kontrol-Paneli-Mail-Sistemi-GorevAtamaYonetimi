@@ -76,15 +76,15 @@ function truncateText($text, $length = 10) {
     return mb_substr($text, 0, $length, 'UTF-8') . '....';
 }
 
-$sql = "SELECT note,konu, date,id,user,okundu,date FROM mymails WHERE kime = :username ORDER BY date desc";
+$sql = "SELECT id,yetki,username,email,telefon,isim,soyisim FROM users WHERE ekip = :ekip ORDER BY username asc";
 
 $stmt = $pdo->prepare($sql);
 
-$stmt->bindParam(':username', $username, PDO::PARAM_STR);
+$stmt->bindParam(':ekip', $ekip, PDO::PARAM_STR);
 
 $stmt->execute();
 
-$notes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$ekipuyeleri = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 if ($username == "admin")
@@ -143,9 +143,9 @@ if ($username == "admin")
 
 
     <div id="addNoteDiv" class="mt-3">
-    <input id="username_sending" class="form-control mb-2 gonderilecek" placeholder="Kime (Username)"></input>
     <input id="username_sending_konu" class="form-control mb-2" placeholder="Konu"></input>
 
+    <div id="ekipno" style="display: none"><?php echo $ekip; ?></div>
             <textarea id="newNote" class="form-control mb-2" placeholder="Mesajınızı buraya yazın.."></textarea>
             <button id="saveNoteButton" class="btn btn-success">Gönder</button>
         </div>
@@ -158,46 +158,38 @@ if ($username == "admin")
     <div class="account-edit-tab fade-in-down-4">
 
     <div class="butonlar-notes">
-    <span class="info-text">Gelen Mesajlarınız</span>
-
-    <span><span class="delete-note" id="deleteNote"><img src="openmytask/trash2.svg" alt="Sil">(1) Mesajı Sil</span></span>
-        <span><span class="add-note" id="addNoteButton" ><img src="openmytask/send.svg" alt="Ekle">Mesaj Gönder</span></span>
+    <span class="info-text">Ekibiniz</span>
+        <span><span class="sendmailekip" id="addNoteButton" ><img src="openmytask/send.svg" alt="Ekle">Tüm Ekibe Mesaj Gönder</span></span>
     </div>
     <div class="gelenkutusu">
         <div class="mailler">
     <?php 
-foreach ($notes as $note) {
+foreach ($ekipuyeleri as $uye) {
     ?>
-        <div class="my-notes-menu" id="<?php print_r($note['id']); ?>">
+        <div class="my-notes-menu" id="<?php print_r($uye['id']); ?>">
 
        
 <div class="container text-center">
   <div class="row">
 
-  <div class="col">
-<?php if($note['okundu'] == "0"){?>
-  <img src="openmytask/blue-circle.svg" alt="Yeni" class="okunmadi">
-  Okunmadı
-  <?php }else{?>
-    <img src="openmytask/round-graph.svg" alt="Yeni" class="okundu">
-Okundu
-    <?php }?>
-    </div>
+
    
     <div class="col">
+  <span class="<?php echo $uye['yetki'] == "Admin" ? 'baslik' : 'text'; ?>"><img src="openmytask/user-refresh.svg" alt="MailGonderen"> <?php echo $uye['username']; ?></span>
+    </div>
+    <div class="col">
+    <span class="text"> <?php echo $uye['email']; ?></span>
+    </div>
+    <div class="col">
+    <span class="text"><?php echo $uye['telefon']; ?></span>
+    </div>
+    <div class="col">
+    <span class="text"><?php echo $uye['isim']; ?></span>
+    </div>
+    <div class="col">
+    <span class="text"><?php echo $uye['soyisim']; ?></span>
+    </div>
 
-  <span class="<?php echo $note['okundu'] == "0" ? 'baslik' : 'text'; ?>"><img src="openmytask/user-refresh.svg" alt="MailGonderen"> <?php echo $note['user']; ?></span>
-    </div>
-    <div class="col">
-    <span class="<?php echo $note['okundu'] == "0" ? 'baslik' : 'text' ?>"> <?php $truncatedText = truncateText($note['konu'],40); echo $truncatedText; ?></span>
-    </div>
-    <div class="col">
-    <span class="<?php echo $note['okundu'] == "0" ? 'baslik' : 'text' ?>"><?php $truncatedText = truncateText($note['note']); echo $truncatedText; ?></span>
-    </div>
-    <div class="col">
-    <span class="<?php echo $note['okundu'] == "0" ? 'baslik' : 'text' ?>"><?php echo $note['date']; ?></span>
-    </div>
- 
   </div>
 </div>
 
@@ -324,22 +316,21 @@ Okundu
 
 function notGonder(){
     const newNote = document.getElementById('newNote').value;
-    const kime = document.getElementById('username_sending').value;
     const konu = document.getElementById('username_sending_konu').value;
-
+    const ekip = document.getElementById('ekipno').innerHTML;
 
     if (newNote.trim() !== "" && kime.trim() !== "") {
-        fetch('send_mail.php', {
+        fetch('send_mail_ekip.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ note: newNote, kime: kime,konu: konu })
+            body: JSON.stringify({ note: newNote,konu: konu ,ekip:ekip})
         })
         .then(response => response.json()) 
         .then(data => {
             if (data.success) {
-                alert("Mailiniz başarıyla gönderildi.");
+                alert("Mailiniz ekip üyelerine başarıyla gönderildi.");
                 window.location.reload(); 
             } else {
                 alert('Hata: ' + data.message);
