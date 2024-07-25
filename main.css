@@ -465,6 +465,19 @@ align-items: center;
     flex-wrap: nowrap;
     align-items: center;
 }
+.account-edit-tab-notes{
+    z-index: -10;
+    display: flex;
+    min-height: 450px;
+    width: 100%;
+    top: 20%;
+    position: absolute;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+}
 .account-edit-tab-admin{
     z-index: -10;
     display: flex;
@@ -509,6 +522,29 @@ align-items: center;
     font-weight: 500;
     background: #fff;
     align-items: center;
+}
+.my-notes-menu-not{
+    margin: 40px;
+    cursor: pointer;
+    display: flex;
+    height: 300px;
+    padding: 30px;
+    font-family: Montserrat;
+    width: 40%;
+    font-size: 14px;
+    box-shadow: 0 0 1px 4px #e0e0e0;
+    font-weight: 500;
+    background: #fff;
+    align-items: center;
+    justify-content: flex-start;
+}
+.my-notes-menu-not .text{
+    font-weight: 300;
+    float: right;
+
+}
+.my-notes-menu-not img{
+    height: 10px;
 }
 
 .okunmadi{

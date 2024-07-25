@@ -10,6 +10,7 @@ $telefon = "{telefon}";
 $yetki = "{yetki}";
 $unread_mail =0;
 $send_message_permission=1;
+$use_notes_permission=1;
 
 $username = "{username}";
 $gorev = "{yetki}";
@@ -102,6 +103,10 @@ try {
         $send_message_permission = $row['send_message_permission'];
     }
 
+    if (isset($row['use_notes_permission']) && $row['use_notes_permission'] !== false) {
+      $use_notes_permission = $row['use_notes_permission'];
+  }
+
       if (isset($row['email']) && $row['email'] !== false) {
           $mail = $row['email'];
       } else {
@@ -150,10 +155,14 @@ try {
 <div class="card_title">Admin</div>
 </div>
         <?php } ?>
+        <?php if($use_notes_permission==1){?>
+
             <div class="col faction fade-in-down-2 " onClick="window.location.href = 'mynotes.php';">
                 <div class="image"><img src="openmytask/mynotes.svg" alt="Notlarım"></div>
                 <div class="card_title">Notlarım</div>
             </div>
+            <?php } ?>
+
             <?php if($send_message_permission==1){?>
             <div class="col faction fade-in-down-2" onClick="window.location.href = 'gelenkutusu.php';">
                 <div class="image"><img src="openmytask/mail.svg" alt="Gelen Kutusu"></div>

@@ -111,8 +111,12 @@ if ($username == "admin")
 <div id="message" class="overlay" style="display:none;">
         <div class="popup-content">
             <p id="message-content">{message-content}</p>
+            <p id="howissent" style="display:none"></p>
             <button onclick="closePopup()">Kapat</button>
+            <button onclick="reMessage()" style="bottom: 20%;background: #444;">Cevap Yaz</button>
+
         </div>
+
     </div>
 <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png" onClick="window.location.href='dashboard.php'"></div>
@@ -137,7 +141,7 @@ if ($username == "admin")
 
 
     <div id="addNoteDiv" class="mt-3">
-    <input id="username_sending" class="form-control mb-2" placeholder="Kime (Username)"></input>
+    <input id="username_sending" class="form-control mb-2 gonderilecek" placeholder="Kime (Username)"></input>
     <input id="username_sending_konu" class="form-control mb-2" placeholder="Konu"></input>
 
             <textarea id="newNote" class="form-control mb-2" placeholder="Mesajınızı buraya yazın.."></textarea>
@@ -211,12 +215,21 @@ Okundu
         const addNoteDiv = document.getElementById('addNoteDiv');
         const saveNoteButton = document.getElementById('saveNoteButton');
         const messagecontent = document.getElementById('message-content');
+        const whoissentbilgi = document.getElementById('howissent');
         const id= document.getElementsByClassName('my-notes-menu').getElementById;
         
         addNoteButton.addEventListener('click', () => {
-            addNoteDiv.style.display = 'flex';
+            mailgonderkutusu("");
         });
+      function mailgonderkutusu(isim){
+        addNoteDiv.style.display = 'flex';
+       alert(isim);
+       document.getElementById('username_sending').innerText="sadasd";
 
+document.querySelector('.form-control.mb-2.gonderilecek').ariaPlaceholder="asdasdas";
+       
+    
+      }
        
         myNotesDivs.forEach(div => {
             div.addEventListener('click', () => {
@@ -239,6 +252,10 @@ Okundu
             if (data.success) {
            
                 messagecontent.innerHTML=data.mail_bilgisi;
+                
+                whoissentbilgi.innerHTML=data.whoissent;
+
+
                 document.getElementById('message').style.display = 'flex';
 
             } else {
@@ -295,8 +312,7 @@ Okundu
             }
         });
 
-
-        saveNoteButton.addEventListener('click', () => {
+function notGonder(){
     const newNote = document.getElementById('newNote').value;
     const kime = document.getElementById('username_sending').value;
     const konu = document.getElementById('username_sending_konu').value;
@@ -323,11 +339,22 @@ Okundu
     } else {
         alert('Not ve kullanıcı adı boş olamaz.');
     }
+}
+        saveNoteButton.addEventListener('click', () => {
+   notGonder();
 });
 function closePopup() {
             document.getElementById('message').style.display = 'none';
         }
 
+
+        function reMessage() {
+            const whosend = document.getElementById('howissent').innerHTML;
+
+            document.getElementById('message').style.display = 'none';
+          
+            mailgonderkutusu(whosend);
+        }
     </script>
 
 

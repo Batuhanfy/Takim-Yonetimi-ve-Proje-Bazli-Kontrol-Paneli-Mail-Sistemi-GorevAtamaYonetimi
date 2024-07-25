@@ -9,6 +9,7 @@ $gorev = "{yetki}";
 $mail = "{mail}";
 $telefon = "{telefon}";
 $yetki = "{yetki}";
+$use_notes_permission=1;
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $username = $_SESSION['username'];
@@ -40,6 +41,13 @@ try {
             $mail = $row['email'];
         } else {
         }
+        if (isset($row['use_notes_permission']) && $row['use_notes_permission'] !== 0) {
+            $use_notes_permission = $row['use_notes_permission'];
+        } else {
+            header("Location: dashboard.php");
+            die();
+        }
+      
 
         if (isset($row['telefon']) && $row['telefon'] !== false) {
             $telefon = $row['telefon'];
@@ -122,17 +130,18 @@ if ($username == "admin")
 
     
 
-    <div class="account-edit-tab fade-in-down-4">
+    <div class="account-edit-tab-notes fade-in-down-4">
     <div class="butonlar-notes">
     <span><span class="delete-note" id="deleteNote"><img src="openmytask/delete.svg" alt="Sil">Seçili Notu Sil</span></span>
         <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Not Ekle</span></span>
+
     </div>
 
  
     <?php 
 foreach ($notes as $note) {
     ?>
-        <div class="my-notes-menu" id="<?php print_r($note['id']); ?>">
+        <div class="my-notes-menu-not" id="<?php print_r($note['id']); ?>">
 
        
 <div class="container text-center">
@@ -161,7 +170,7 @@ foreach ($notes as $note) {
     </div>
     <script>
 
-        const myNotesDivs = document.querySelectorAll('.my-notes-menu');
+        const myNotesDivs = document.querySelectorAll('.my-notes-menu-not');
         const deleteButton = document.getElementById('deleteNote');
         let selectedNoteId = null;
         const addNoteButton = document.getElementById('addNoteButton');
@@ -242,7 +251,7 @@ foreach ($notes as $note) {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.reload();
+                      
 
 
 
@@ -251,6 +260,7 @@ foreach ($notes as $note) {
                             newNoteDiv.classList.add('selected');
                             selectedNoteId = newNoteDiv.id;
                             deleteButton.style.display = 'block';
+                            window.location.reload();
                         });
                     } else {
                         alert('Not eklenirken bir hata oluştu.');
