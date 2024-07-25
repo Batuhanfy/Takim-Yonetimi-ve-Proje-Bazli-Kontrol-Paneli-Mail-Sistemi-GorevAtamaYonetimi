@@ -9,6 +9,7 @@ $mail = "{mail}";
 $telefon = "{telefon}";
 $yetki = "{yetki}";
 $unread_mail =0;
+$send_message_permission=1;
 
 $username = "{username}";
 $gorev = "{yetki}";
@@ -97,6 +98,10 @@ try {
       } else {
       }
 
+      if (isset($row['send_message_permission']) && $row['send_message_permission'] !== false) {
+        $send_message_permission = $row['send_message_permission'];
+    }
+
       if (isset($row['email']) && $row['email'] !== false) {
           $mail = $row['email'];
       } else {
@@ -149,11 +154,13 @@ try {
                 <div class="image"><img src="openmytask/mynotes.svg" alt="Notlarım"></div>
                 <div class="card_title">Notlarım</div>
             </div>
+            <?php if($send_message_permission==1){?>
             <div class="col faction fade-in-down-2" onClick="window.location.href = 'gelenkutusu.php';">
                 <div class="image"><img src="openmytask/mail.svg" alt="Gelen Kutusu"></div>
                 <div class="card_title">Gelen Kutusu</div>
                 <?php if ($unread_mail>0){?><span class="notification-badge"><?php echo $unread_mail; ?> Yeni Mesaj</span> <?php }?>
             </div>
+            <?php } ?>
             <div class="col faction fade-in-down-2">
                 <div class="image"><img src="openmytask/alarm.svg" alt="Görevler"></div>
                 <div class="card_title">Görevler</div>

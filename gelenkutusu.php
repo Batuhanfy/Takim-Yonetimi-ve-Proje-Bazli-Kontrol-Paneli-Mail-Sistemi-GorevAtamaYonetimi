@@ -36,6 +36,13 @@ try {
         } else {
         }
 
+        if (isset($row['send_message_permission']) && $row['send_message_permission'] !== 0) {
+         
+        } else {
+            header("Location: dashboard.php");
+    die();
+        }
+
         if (isset($row['email']) && $row['email'] !== false) {
             $mail = $row['email'];
         } else {
