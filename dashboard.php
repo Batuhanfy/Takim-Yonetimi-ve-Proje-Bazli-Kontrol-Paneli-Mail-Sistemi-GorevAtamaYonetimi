@@ -134,7 +134,7 @@ $yetki = "Admin";
       <input id="gorev_username" class="form-control mb-2" placeholder="Görevlendirilecek Kullanıcı Adı Giriniz"></input>
       <textarea id="aciklamasi" class="form-control mb-2" placeholder="Görev Açıklamasını buraya yazın.."></textarea>
       <input id="date1" type="datetime-local" class="form-control mb-2"></input>
-        <input id="date2" type="datetime-local" class="form-control mb-2"></input>
+      <input id="date2" type="datetime-local" class="form-control mb-2"></input>
 
 
       <button onclick="document.getElementById('gorevtanimla').style.display='none';">Kapat</button>
@@ -277,51 +277,62 @@ $yetki = "Admin";
     function yenigorevtanimla() {
       document.getElementById('gorevtanimla').style.display = "flex";
     }
-    function gorevlendir(){
+
+    function gorevlendir() {
 
       document.getElementById('gorevtanimla').style.display = "none";
 
       const gorev_konusu = document.getElementById('gorev_konusu').value;
-    const gorev_username = document.getElementById('gorev_username').value;
-    const aciklamasi = document.getElementById('aciklamasi').value;
-    const date1 = document.getElementById('date1').value;
-    const date2 = document.getElementById('date2').value;
+      const gorev_username = document.getElementById('gorev_username').value;
+      const aciklamasi = document.getElementById('aciklamasi').value;
+      const date1 = document.getElementById('date1').value;
+      const date2 = document.getElementById('date2').value;
 
-
-      if (gorev_konusu.trim()!== "" && gorev_username.trim()!== "" && aciklamasi.trim()!== "" && date1.trim()!== "" && date2.trim()!== "") {
+      if (gorev_konusu.trim() !== "" && gorev_username.trim() !== "" && aciklamasi.trim() !== "" && date1.trim() !== "" && date2.trim() !== "") {
+      
+      
+      
         fetch('add_task_member.php', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                gorev_konusu: gorev_konusu,
-                date1: date1,
-                gorev_username:gorev_username,
-                date2: date2,
-                aciklamasi: aciklamasi,
+              gorev_konusu: gorev_konusu,
+              date1: date1,
+              gorev_username: gorev_username,
+              date2: date2,
+              aciklamasi: aciklamasi,
 
             })
-        })
-        .then(response => response.json())
-        .then(data => {
+          })
+          .then(response => response.json())
+          .then(data => {
             if (data.success) {
-                alert("Görev başarıyla ekledi.");
-                window.location.reload();
+              alert("Görev başarıyla ekledi.");
+              window.location.reload();
 
             } else {
-                alert('Hata: ' + data.message);
-                window.location.reload();
+              alert('Hata: ' + data.message);
+              window.location.reload();
             }
-        })
-        .catch(error => console.error('Error:', error));
-    } else {
+          })
+        
+          .catch(error => console.error('Error:', error));
+        
+      
+        } else {
         alert('Boş alan olamaz.');
+      }
+
+
+
+ 
+ 
+ 
     }
 
-
-
-    }
+    
   </script>
 </body>
 
