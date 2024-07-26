@@ -84,7 +84,24 @@ if ($username == "admin")
 </head>
 
 
+
 <body>
+
+<div id="ban_user" class="overlay" style="display:none;">
+    <div class="popup-content">
+      <p id="message-content">Hesap Engelleme / Banlama Sistemi</p>
+      <input id="gorev_username" class="form-control mb-2" placeholder="Görevlendirilecek Kullanıcı Adı Giriniz"></input>
+
+
+
+      <button onclick="document.getElementById('gorevtanimla').style.display='none';">Kapat</button>
+      <button onclick="ban_user()" style="bottom: 20%;background: #444;">Erişimini Engelle</button>
+
+    </div>
+
+
+
+
 
     <div class="welcome-admin">
         <h3 class="fade-in-down">Yönetici Paneline Hoşgeldiniz, Sayın <?php print_r($username); ?></h3>
@@ -123,7 +140,7 @@ if ($username == "admin")
                         foreach ($users as $user) {
                     ?>
                             <div class="col" style="margin-bottom:10px;">
-                                <span class="text"><?php echo "  -  " . htmlspecialchars($user['username'])  ?> </span>
+                                <span class="text"><?php echo "  -   " . htmlspecialchars($user['username'])  ?> </span>
                                 <span class="text"><?php echo "  -  " . htmlspecialchars($user['email'])  ?> </span>
                                 <span class="text"><?php echo "  -  " . htmlspecialchars($user['telefon'])  ?> </span>
                                 <span class="text"><?php echo "  -  " . htmlspecialchars($user['gorev'])  ?> </span>
@@ -140,9 +157,60 @@ if ($username == "admin")
                     } ?>
                 </div>
 
-            
+            <div class="container"><div class="admin_button">Kullanıcı Banla</div></div>
             </div>
         </div>
+
+        <script>
+   
+    function ban_user() {
+
+      document.getElementById('ban_user').style.display = "none";
+
+      const gorev_username = document.getElementById('gorev_username').value;
+
+      if ( gorev_username.trim() !== "") {
+      
+    
+      
+        fetch('member_ban.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              gorev_username: gorev_username
+
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              alert("Başarıyla kullanıcı engellendi..");
+              window.location.reload();
+
+            } else {
+              alert('Hata: ' + data.message);
+              window.location.reload();
+            }
+          })
+        
+          .catch(error => console.error('Error:', error));
+        
+      
+        } else {
+        alert('Boş alan olamaz.');
+      }
+
+
+
+ 
+ 
+ 
+    }
+
+    
+  </script>
 </body>
 
 </html>

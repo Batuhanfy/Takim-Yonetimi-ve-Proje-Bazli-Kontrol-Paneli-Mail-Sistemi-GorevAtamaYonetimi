@@ -609,6 +609,14 @@ align-items: center;
 .uyeler-1 .col{
     display: flex;
 }
+.admin_button{
+    margin-top: 20px;
+    border-radius: 4px;
+    color: #fff;
+    background: #005ccf;
+    height: 50px;
+    width: 100px;
+}
 .account-edit-tab{
     z-index: -10;
     display: flex;
