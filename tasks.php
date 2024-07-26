@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <?php session_start();
 session_regenerate_id(true);
@@ -9,7 +8,7 @@ $gorev = "{yetki}";
 $mail = "{mail}";
 $telefon = "{telefon}";
 $yetki = "{yetki}";
-$use_notes_permission=1;
+$use_notes_permission = 1;
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     $username = $_SESSION['username'];
@@ -47,7 +46,7 @@ try {
             header("Location: dashboard.php");
             die();
         }
-      
+
 
         if (isset($row['telefon']) && $row['telefon'] !== false) {
             $telefon = $row['telefon'];
@@ -58,16 +57,11 @@ try {
             $yetki = $row['yetki'];
         } else {
         }
-
     }
-
- 
-
-
 } catch (PDOException $e) {
 }
 
-$sql = "SELECT note, date,id FROM mynotes WHERE user = :username";
+$sql = "SELECT task, startDate,endDate,aciklamasi,id FROM mytask WHERE username = :username order by endDate asc";
 
 $stmt = $pdo->prepare($sql);
 
@@ -83,10 +77,11 @@ if ($username == "admin")
 
 ?>
 <html lang="tr">
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Notes</title>
+    <title>My Tasks</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -101,11 +96,9 @@ if ($username == "admin")
     <link href="main.css" rel="stylesheet">
 
 </head>
+
 <body>
-
-<span class="delete-note" id="deleteNote" style="display:none"><img src="openmytask/delete.svg" alt="Sil" >Seçili Notu Sil</span>
-
-<div class="headings fade-in-down-4">
+    <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png" onClick="window.location.href='dashboard.php'"></div>
         <div class="account">
             <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
@@ -128,52 +121,67 @@ if ($username == "admin")
 
 
     <div id="addNoteDiv" class="mt-3">
-   <?php require('quill.php'); ?>
-           <!-- <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea> -->
+        <?php require('quill.php'); ?>
+        <!-- <textarea id="newNote" class="form-control mb-2" placeholder="Notunuzu buraya yazın..."></textarea> -->
+    </div>
+
+
+
+    <div class="account-edit-tab-tasks fade-in-down-4">
+        
+
+        <div class="bilgilendirme">
+            <h3>Bu listenizi Moderatör kullanıcılar görüntüleyebilir.</h3>
         </div>
+        <?php
+        $now = new DateTime();
+        foreach ($notes as $note) {
+            $endDate = new DateTime($note['endDate']);
 
-    
 
-    <div class="account-edit-tab-notes fade-in-down-4">
-    <div class="butonlar-notes">
-        <span><span class="add-note" id="addNoteButton" ><img src="openmytask/add.svg" alt="Ekle">Yeni Not Ekle</span></span>
+        ?>
 
-    </div>
+            <div class="my-notes-menu-not tasks" id="<?php print_r($note['id']); ?>" <?php if ($endDate < $now) {
+                                                                                    echo 'style="border: 2px solid red;";';
+                                                                                } ?>>
 
- 
-    <?php 
-foreach ($notes as $note) {
-    ?>
-        <div class="my-notes-menu-not" id="<?php print_r($note['id']); ?>">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <span class="text">
+                                <?php
+                                if ($endDate < $now) {
+                                    print_r("Tarihi Geçti.");
+                                }
+                                ?>
+                            </span>
+                        </div>
 
-       
-<div class="container text-center nots">
-<div class="row" style="display: flex; height: 100%; flex-direction: column; justify-content: flex-start; align-items: flex-start; align-content: flex-start;">
 
-    <div class="col" style="text-align: left;">
-    <span class="baslik"><?php echo $note['note']; ?></span>
-    </div>
-    <div class="col-6 not_tarih" style="width: 100%;">
-    <span class="text">Tarih: <?php echo $note['date']; ?></span>
-    </div>
- 
-  </div>
-</div>
+
+                        <div class="col">
+                            <span class="baslik"><?php echo $note['task']; ?></span>
+                        </div>
+                        <div class="col">
+                            <span class="text"><?php echo $note['aciklamasi']; ?></span>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
 
-           
 
 
 
-        
-        <?php }if ($notes == null){
-        print_r("<div class='no-notes'><h3> Not girişi yok.</h3></div>");
-        
+
+
+        <?php }
+        if ($notes == null) {
+            print_r("<div class='no-notes'><h3> Görev girişi yok.</h3></div>");
         } ?>
     </div>
     <script>
-
         const myNotesDivs = document.querySelectorAll('.my-notes-menu-not');
         const deleteButton = document.getElementById('deleteNote');
         let selectedNoteId = null;
@@ -181,21 +189,21 @@ foreach ($notes as $note) {
         const addNoteDiv = document.getElementById('addNoteDiv');
         const saveNoteButton = document.getElementById('saveNoteButton');
 
-        
+
         addNoteButton.addEventListener('click', () => {
             addNoteDiv.style.display = 'flex';
         });
 
-       
+
         myNotesDivs.forEach(div => {
             div.addEventListener('click', () => {
-              
+
                 myNotesDivs.forEach(d => d.classList.remove('selected_note'));
 
-                
+
                 div.classList.add('selected_note');
 
-               
+
                 console.log(div.id);
 
 
@@ -211,31 +219,33 @@ foreach ($notes as $note) {
 
                 const noteToDelete = document.getElementById(selectedNoteId);
                 if (noteToDelete) {
-                    
-                fetch('delete_note.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: selectedNoteId })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload();
-                        const noteToDelete = document.getElementById(selectedNoteId);
-                        if (noteToDelete) {
-                            noteToDelete.remove();
-                        }
-                        deleteButton.style.display = 'none';
-                        selectedNoteId = null;
-                    } else {
-                        alert('Not silinirken bir hata oluştu.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+
+                    fetch('delete_note.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                id: selectedNoteId
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                window.location.reload();
+                                const noteToDelete = document.getElementById(selectedNoteId);
+                                if (noteToDelete) {
+                                    noteToDelete.remove();
+                                }
+                                deleteButton.style.display = 'none';
+                                selectedNoteId = null;
+                            } else {
+                                alert('Not silinirken bir hata oluştu.');
+                            }
+                        })
+                        .catch(error => console.error('Error:', error));
                 }
-                
+
                 deleteButton.style.display = 'none';
                 selectedNoteId = null;
             }
@@ -246,26 +256,28 @@ foreach ($notes as $note) {
             const newNote = document.getElementById('newNote').value;
             if (newNote.trim() !== "") {
                 fetch('add_note.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ note: newNote })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                      
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            note: newNote
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
 
-                            
+
+
                             window.location.reload();
-                            
-                        
-                    } else {
-                        alert('Not eklenirken bir hata oluştu.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
+
+
+                        } else {
+                            alert('Not eklenirken bir hata oluştu.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
             } else {
                 alert('Not boş olamaz.');
             }
@@ -273,11 +285,8 @@ foreach ($notes as $note) {
     </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
 </body>
-
-
-                        

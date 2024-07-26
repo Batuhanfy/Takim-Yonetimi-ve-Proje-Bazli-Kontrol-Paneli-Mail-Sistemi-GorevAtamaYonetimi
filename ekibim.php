@@ -165,7 +165,7 @@ if ($username == "admin")
 
             <div class="butonlar-notes">
                 <span class="info-text">Ekibiniz</span>
-                <?PHP if ($yetki == "Supervisor") { ?> <span  onclick="addMembers('')"><span class="sendmailekip" id="addMember"><img src="openmytask/add.svg" alt="Ekle">Ekibe Üye Ekle</span></span><?php } ?>
+                <?PHP if ($yetki == "Supervisor"||$yetki=="Admin") { ?> <span  onclick="addMembers('')"><span class="sendmailekip" id="addMember"><img src="openmytask/add.svg" alt="Ekle">Ekibe Üye Ekle</span></span><?php } ?>
 
                 <?PHP if ($yetki == "Supervisor") { ?> <span onclick="openaddtaskmenu()"><span class="addtaskekip" id="addTaskEkip"><img src="openmytask/add.svg" alt="Ekle" >Ekibe Yeni Görev Ekle</span></span><?php } ?>
                 <span><span class="sendmailekip" id="addNoteButton"><img src="openmytask/send.svg" alt="Ekle">Tüm Ekibe Mesaj Gönder</span></span>

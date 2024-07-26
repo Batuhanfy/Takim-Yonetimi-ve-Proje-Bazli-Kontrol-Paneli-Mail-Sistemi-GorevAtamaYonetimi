@@ -341,7 +341,7 @@ align-items: center;
     width: 170px;
     height: 30px;
     
-    border-radius: 5px;
+    border-radius: 30px;
     font-weight: 700;
     font-size: 14px;
     font-family: Montserrat;
@@ -410,17 +410,20 @@ align-items: center;
     height: 20px;
 }
 .delete-note {
+
+    transform: translate(-50%, -50%);
     margin-right: 10px;
-    display: none;
+    position: fixed;
     box-shadow: 1px 1px 8px 0px #cacaca;
-    width: 130px;
-    height: 30px;
+    bottom: 2%;
+    left: 50%;
+    width: 50%;
+    height: 60px;
     border-radius: 5px;
-    font-weight: 700;
     font-size: 14px;
     font-family: Montserrat;
     color: #fff;
-    background: #ff0000;
+    background: #5f5f5f;
     border: none;
     justify-content: center;
     align-items: center;
@@ -445,7 +448,36 @@ align-items: center;
     flex-direction: column;
 
 }
-#addNoteDiv {
+.newmember_container{
+    height: 100%;
+    width: 100%;
+    margin-top: 100px;
+    position: absolute;
+}
+.newmember_form{
+    width: 100%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.newmember_form form{
+    width: 100%;
+  
+}
+.uye_formu{
+    padding-top: 25px;
+    display: flex;
+    box-shadow: 1px 1px 8px 0px #ececec;
+    height: 100%;
+    top: 50%;
+    left: 30%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-direction: column;
+}
+#addMemberdiv {
     font-family: Montserrat;
     box-shadow: 1px 1px 4px 3px #e7e7e7;
     background: #fff;
@@ -482,6 +514,17 @@ align-items: center;
     flex-wrap: nowrap;
     flex-direction: column;
 
+    
+}
+.bilgilendirme{
+    text-align: center;
+    width: 100%;
+}
+
+.bilgilendirme h3{
+    font-size: 24px;
+    font-family: Mont;
+    width: 100%;
 }
 #addTaskMembers input[type="date"]::-webkit-calendar-picker-indicator {
     background: transparent;
@@ -549,7 +592,7 @@ align-items: center;
 }
 
 .butonlar-notes{
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     
 }
 .uyeler-1{
@@ -580,7 +623,20 @@ align-items: center;
     display: flex;
     min-height: 450px;
     width: 100%;
-    top: 20%;
+    top: 5%;
+    position: absolute;
+    align-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.account-edit-tab-tasks{
+    z-index: -10;
+    display: flex;
+    min-height: 450px;
+    width: 100%;
+    top: 25%;
     position: absolute;
     align-content: center;
     justify-content: space-evenly;
@@ -633,16 +689,21 @@ align-items: center;
     background: #fff;
     align-items: center;
 }
+
+.my-notes-menu-not.tasks{
+    width: 80%;
+}
 .my-notes-menu-not{
-    margin: 40px;
+    border-radius: 15px;
+    margin: 10px;
     cursor: pointer;
     display: flex;
-    height: 300px;
+    min-height: 120px;
     padding: 30px;
     font-family: Montserrat;
-    width: 40%;
+    width: 45%;
     font-size: 14px;
-    box-shadow: 0 0 1px 4px #e0e0e0;
+    border: 3px solid #e0e0e0;
     font-weight: 500;
     background: #fff;
     align-items: center;
@@ -650,7 +711,14 @@ align-items: center;
 }
 .my-notes-menu-not .text{
     font-weight: 300;
-    float: right;
+   
+
+}
+
+.container.text-center.nots{
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
 
 }
 .my-notes-menu-not img{
@@ -697,9 +765,16 @@ align-items: center;
 
 }
 .col .baslik{
-    font-weight: 700;
+    font-weight: 600;
 
 }
+.not_tarih{
+    padding: 5px;
+    border-radius: 10px;
+    background: #ccc;
+    width: 100%;
+}
+
 
 .details a{
     display: flex;

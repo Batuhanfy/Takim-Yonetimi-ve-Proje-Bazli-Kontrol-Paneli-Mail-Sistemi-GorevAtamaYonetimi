@@ -108,6 +108,8 @@ if ($username == "admin")
 
 </head>
 <body>
+<span class="delete-note" id="deleteNote" style="display:none;"><img src="openmytask/trash2.svg" alt="Sil">(1) Mesajı Sil</span>
+
 <div id="message" class="overlay" style="display:none;">
         <div class="popup-content">
             <p id="message-content">{message-content}</p>
@@ -155,7 +157,6 @@ if ($username == "admin")
     <div class="butonlar-notes">
     <span class="info-text">Gelen Mesajlarınız</span>
 
-    <span><span class="delete-note" id="deleteNote"><img src="openmytask/trash2.svg" alt="Sil">(1) Mesajı Sil</span></span>
         <span><span class="add-note" id="addNoteButton" ><img src="openmytask/send.svg" alt="Ekle">Mesaj Gönder</span></span>
     </div>
     <div class="gelenkutusu">
