@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <?php session_start();
 session_regenerate_id(true);
@@ -40,7 +39,7 @@ try {
 
         if (isset($row['ekip']) && $row['ekip'] !== false) {
             $ekip = $row['ekip'];
-        } 
+        }
 
 
 
@@ -59,20 +58,16 @@ try {
             $yetki = $row['yetki'];
         } else {
         }
-
     }
-
- 
-
-
 } catch (PDOException $e) {
 }
 
-function truncateText($text, $length = 10) {
+function truncateText($text, $length = 10)
+{
     if (strlen($text) <= $length) {
         return $text;
     }
-    
+
     return mb_substr($text, 0, $length, 'UTF-8') . '....';
 }
 
@@ -92,10 +87,11 @@ if ($username == "admin")
 
 ?>
 <html lang="tr">
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Mails</title>
+    <title>Ekibim</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -109,18 +105,12 @@ if ($username == "admin")
     <link href="main.css" rel="stylesheet">
 
 </head>
+
 <body>
-<div id="message" class="overlay" style="display:none;">
-        <div class="popup-content">
-            <p id="message-content">{message-content}</p>
-            <p id="howissent" style="display:none"></p>
-            <button onclick="closePopup()">Kapat</button>
-            <button onclick="reMessage()" style="bottom: 20%;background: #444;">Cevap Yaz</button>
 
-        </div>
 
-    </div>
-<div class="headings fade-in-down-4">
+
+    <div class="headings fade-in-down-4">
         <div class="logo"><img src="images/openmytask.png" onClick="window.location.href='dashboard.php'"></div>
         <div class="account">
             <span class="account_dev"><img src="openmytask/user.svg" alt="Notlarım"></span>
@@ -141,229 +131,250 @@ if ($username == "admin")
 
 
 
+    <div id="addTaskMembers" class="mt-3" style="display:none;">
+        <input id="gorev_konusu" class="form-control mb-2" placeholder="Görevi Giriniz"></input>
+        <input id="date1" type="datetime-local" class="form-control mb-2"></input>
+        <input id="date2" type="datetime-local" class="form-control mb-2"></input>
+
+
+        <div id="ekipno" style="display: none"><?php echo $ekip; ?></div>
+        <textarea id="aciklamasi" class="form-control mb-2" placeholder="Açıklamasını buraya yazın.."></textarea>
+        <button id="addTaskMembersButton" class="btn btn-success" onclick="addTaskMembers()">Gönder</button>
+    </div>
 
     <div id="addNoteDiv" class="mt-3">
-    <input id="username_sending_konu" class="form-control mb-2" placeholder="Konu"></input>
+        <input id="username_sending_konu" class="form-control mb-2" placeholder="Konu"></input>
 
-    <div id="ekipno" style="display: none"><?php echo $ekip; ?></div>
-            <textarea id="newNote" class="form-control mb-2" placeholder="Mesajınızı buraya yazın.."></textarea>
-            <button id="saveNoteButton" class="btn btn-success">Gönder</button>
+        <div id="ekipno" style="display: none"><?php echo $ekip; ?></div>
+        <textarea id="newNote" class="form-control mb-2" placeholder="Mesajınızı buraya yazın.."></textarea>
+        <button id="saveNoteButton" class="btn btn-success" >Gönder</button>
+    </div>
+    
+    <div id="addMemberdiv" class="mt-3" style="display:none;">
+        <input id="username" class="form-control mb-2" placeholder="Kullanıcı Adı"></input>
+
+        <div id="ekipno" style="display: none"><?php echo $ekip; ?></div>
+        <button id="addButtons" class="btn btn-success">Ekle</button>
+    </div>
+
+    <?php if ($ekip != 0) {  ?>
+
+
+
+        <div class="account-edit-tab fade-in-down-4">
+
+            <div class="butonlar-notes">
+                <span class="info-text">Ekibiniz</span>
+                <?PHP if ($yetki == "Supervisor") { ?> <span  onclick="addMembers('')"><span class="sendmailekip" id="addMember"><img src="openmytask/add.svg" alt="Ekle">Ekibe Üye Ekle</span></span><?php } ?>
+
+                <?PHP if ($yetki == "Supervisor") { ?> <span onclick="openaddtaskmenu()"><span class="addtaskekip" id="addTaskEkip"><img src="openmytask/add.svg" alt="Ekle" >Ekibe Yeni Görev Ekle</span></span><?php } ?>
+                <span><span class="sendmailekip" id="addNoteButton"><img src="openmytask/send.svg" alt="Ekle">Tüm Ekibe Mesaj Gönder</span></span>
+            </div>
+            <div class="gelenkutusu">
+                <div class="mailler">
+                    <?php
+                    foreach ($ekipuyeleri as $uye) {
+                    ?>
+                        <div class="my-notes-menu" id="<?php print_r($uye['id']); ?>">
+
+
+                            <div class="container text-center">
+                                <div class="row">
+
+
+
+                                    <div class="col">
+                                        <span class="<?php echo $uye['yetki'] == "Supervisor" ? 'baslik' : 'text'; ?>"><img src="openmytask/user-refresh.svg" alt="MailGonderen"> <?php echo $uye['username']; ?><?php echo $uye['yetki'] == "Supervisor" ? ' (Moderator)' : ''; ?></span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="text"> <?php echo $uye['email']; ?></span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="text"><?php echo $uye['telefon']; ?></span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="text"><?php echo $uye['isim']; ?></span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="text"><?php echo $uye['soyisim']; ?></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                    <?php } ?>
+                </div>
+            </div>
         </div>
 
-    
-<?php if($ekip != 0){  ?>
 
-
-
-    <div class="account-edit-tab fade-in-down-4">
-
-    <div class="butonlar-notes">
-    <span class="info-text">Ekibiniz</span>
-        <span><span class="sendmailekip" id="addNoteButton" ><img src="openmytask/send.svg" alt="Ekle">Tüm Ekibe Mesaj Gönder</span></span>
-    </div>
-    <div class="gelenkutusu">
-        <div class="mailler">
-    <?php 
-foreach ($ekipuyeleri as $uye) {
-    ?>
-        <div class="my-notes-menu" id="<?php print_r($uye['id']); ?>">
-
-       
-<div class="container text-center">
-  <div class="row">
-
-
-   
-    <div class="col">
-  <span class="<?php echo $uye['yetki'] == "Admin" ? 'baslik' : 'text'; ?>"><img src="openmytask/user-refresh.svg" alt="MailGonderen"> <?php echo $uye['username']; ?></span>
-    </div>
-    <div class="col">
-    <span class="text"> <?php echo $uye['email']; ?></span>
-    </div>
-    <div class="col">
-    <span class="text"><?php echo $uye['telefon']; ?></span>
-    </div>
-    <div class="col">
-    <span class="text"><?php echo $uye['isim']; ?></span>
-    </div>
-    <div class="col">
-    <span class="text"><?php echo $uye['soyisim']; ?></span>
-    </div>
-
-  </div>
-</div>
-
-            </div>
-
-           
-
-
-
-        
-        <?php } ?>
-        </div> </div>
-    </div>
-
-
-    <?php }else{
-                print_r("<div class='no-ekip'><h3> Herhangi bir ekibe atama yapanmadınız.</h3></div>");
-
+    <?php } else {
+        print_r("<div class='no-ekip'><h3> Herhangi bir ekibe atama yapanmadınız.</h3></div>");
     }  ?>
     <script>
+ const myNotesDivs = document.querySelectorAll('.my-notes-menu');
 
-        const myNotesDivs = document.querySelectorAll('.my-notes-menu');
-        const deleteButton = document.getElementById('deleteNote');
-        let selectedNoteId = null;
-        const addNoteButton = document.getElementById('addNoteButton');
-        const addNoteDiv = document.getElementById('addNoteDiv');
-        const saveNoteButton = document.getElementById('saveNoteButton');
-        const messagecontent = document.getElementById('message-content');
-        const whoissentbilgi = document.getElementById('howissent');
-        const id= document.getElementsByClassName('my-notes-menu').getElementById;
-        
-        addNoteButton.addEventListener('click', () => {
-            mailgonderkutusu("");
-        });
-      function mailgonderkutusu(isim){
-        addNoteDiv.style.display = 'flex';
-      
+let selectedNoteId = null;
+const addNoteButton = document.getElementById('addNoteButton');
+const addMember = document.getElementById('addMember');
+const addNoteDiv = document.getElementById('addNoteDiv');
+const addMemberdiv = document.getElementById('addMemberdiv');
+const saveNoteButton = document.getElementById('saveNoteButton');
+const addButtons = document.getElementById('addButtons');
+const messagecontent = document.getElementById('message-content');
+const whoissentbilgi = document.getElementById('howissent');
+const deleteButton = document.getElementById('deleteButton'); // Tanımlanmamış bir öğe varsa, HTML'de eklemelisiniz
 
-     
-       document.getElementById('username_sending').value = isim;
+addNoteButton.addEventListener('click', () => {
+    mailgonderkutusu("");
+});
+
+
+
+function addMembers(isim) {
+    addMemberdiv.style.display = 'flex';
+}
+
+function mailgonderkutusu(isim) {
+    addNoteDiv.style.display = 'flex';
+}
+
+
+function openaddtaskmenu(){
+    document.getElementById('addTaskMembers').style.display = 'flex';
+}
+function addTaskMembers() {
     
-      }
-       
-        myNotesDivs.forEach(div => {
-            div.addEventListener('click', () => {
-              
-                myNotesDivs.forEach(d => d.classList.remove('selected_note'));
-                selectedNoteId = div.id;
-                deleteButton.style.display = 'flex';
+    const gorev_konusu = document.getElementById('gorev_konusu').value;
+    const date1 = document.getElementById('date1').value;
+    const date2 = document.getElementById('date2').value;
+    const aciklamasi = document.getElementById('aciklamasi').value;
+    const ekip = document.getElementById('ekipno').innerHTML;
 
 
-
-                fetch('view_mail.php', {
+    if (gorev_konusu.trim()!== "" && date1.trim()!== "" && date2.trim()!== "" && aciklamasi.trim()!== "") {
+        fetch('add_task.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: selectedNoteId})
+            body: JSON.stringify({
+                gorev_konusu: gorev_konusu,
+                date1: date1,
+                date2: date2,
+                aciklamasi: aciklamasi,
+                ekip: ekip
+            })
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-           
-                messagecontent.innerHTML=data.mail_bilgisi;
-                
-                whoissentbilgi.innerHTML=data.whoissent;
-
-
-                document.getElementById('message').style.display = 'flex';
+                alert("Görev ekip üyelerine başarıyla eklendi.\nKendinize de taslak olarak ekledi. ");
+                window.location.reload();
 
             } else {
-                alert('Teknik Hata: ' + data.message);
+                alert('Hata: ' + data.message);
+                window.location.reload();
             }
         })
         .catch(error => console.error('Error:', error));
-
-                
-                div.classList.add('selected_note');
-               
-                messagecontent.innerHTML='Mesaj';
-                console.log(div.id);
+    } else {
+        alert('Boş alan olamaz.');
+    }
+}
 
 
-            
-            });
-        });
-
-
-        deleteButton.addEventListener('click', () => {
-            if (selectedNoteId && confirm("Bu maili silmek istediğinize emin misiniz?")) {
-
-
-                const noteToDelete = document.getElementById(selectedNoteId);
-                if (noteToDelete) {
-                    
-                fetch('delete_mail.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: selectedNoteId })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        window.location.reload();
-                        const noteToDelete = document.getElementById(selectedNoteId);
-                        if (noteToDelete) {
-                            noteToDelete.remove();
-                        }
-                        deleteButton.style.display = 'none';
-                        selectedNoteId = null;
-                    } else {
-                        alert('Not silinirken bir hata oluştu.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-                }
-                
-                deleteButton.style.display = 'none';
-                selectedNoteId = null;
-            }
-        });
-
-function notGonder(){
+function notGonder() {
     const newNote = document.getElementById('newNote').value;
     const konu = document.getElementById('username_sending_konu').value;
     const ekip = document.getElementById('ekipno').innerHTML;
 
-    if (newNote.trim() !== "" && kime.trim() !== "") {
+    if (newNote.trim() !== "") {
         fetch('send_mail_ekip.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ note: newNote,konu: konu ,ekip:ekip})
+            body: JSON.stringify({
+                note: newNote,
+                konu: konu,
+                ekip: ekip
+            })
         })
-        .then(response => response.json()) 
+        .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Mailiniz ekip üyelerine başarıyla gönderildi.");
-                window.location.reload(); 
+                alert("Mailiniz ekip üyelerine başarıyla gönderildi.\nKendinize de taslak olarak gönderildi. Gelen kutunuzdan kontrol ediniz.");
+                window.location.reload();
             } else {
                 alert('Hata: ' + data.message);
+                window.location.reload();
             }
         })
         .catch(error => console.error('Error:', error));
     } else {
-        alert('Not ve kullanıcı adı boş olamaz.');
+        alert('Not boş olamaz.');
     }
 }
-        saveNoteButton.addEventListener('click', () => {
-   notGonder();
+
+function kisiyiekle() {
+    const username = document.getElementById('username').value;
+    const ekip = document.getElementById('ekipno').innerHTML;
+
+    if (username.trim() !== "") {
+        fetch('uye_ekle_ekip.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username: username,
+                ekip: ekip,
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Ekip üyesi eklendi.");
+                window.location.reload();
+            } else {
+                alert('Hata: ' + data.message);
+                window.location.reload();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+
+        alert("İşleme alınıyor... Kullanıcı bulunursa ekibe eklenecek");
+        window.location.reload();
+    } else {
+        alert('username boş olamaz.');
+    }
+}
+
+saveNoteButton.addEventListener('click', () => {
+    notGonder();
 });
+
+addButtons.addEventListener('click', () => {
+    kisiyiekle();
+});
+
 function closePopup() {
-            document.getElementById('message').style.display = 'none';
-        }
+    document.getElementById('message').style.display = 'none';
+}
 
-
-        function reMessage() {
-            const whosend = document.getElementById('howissent').innerHTML;
-
-            document.getElementById('message').style.display = 'none';
-          
-            mailgonderkutusu(whosend);
-        }
     </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
 
 </body>
-
-
-                        

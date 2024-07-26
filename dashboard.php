@@ -74,7 +74,7 @@ if ($username == "admin")
 
 try {
 
-  $sqlmail = "SELECT COUNT(*) FROM mymails WHERE user = :username and okundu=0";
+  $sqlmail = "SELECT COUNT(*) FROM mymails WHERE kime = :username and okundu=0";
   $stmtmail = $pdo->prepare($sqlmail);
   $stmtmail->bindParam(':username', $username, PDO::PARAM_STR);
   $stmtmail->execute();
