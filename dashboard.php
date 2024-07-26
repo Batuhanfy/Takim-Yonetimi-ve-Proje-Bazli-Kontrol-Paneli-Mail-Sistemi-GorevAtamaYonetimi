@@ -290,6 +290,7 @@ $yetki = "Admin";
 
       if (gorev_konusu.trim() !== "" && gorev_username.trim() !== "" && aciklamasi.trim() !== "" && date1.trim() !== "" && date2.trim() !== "") {
       
+        alert("boş değillllll");
       
       
         fetch('add_task_member.php', {
@@ -322,6 +323,7 @@ $yetki = "Admin";
         
       
         } else {
+          alert("boşşşşşşş");
         alert('Boş alan olamaz.');
       }
 

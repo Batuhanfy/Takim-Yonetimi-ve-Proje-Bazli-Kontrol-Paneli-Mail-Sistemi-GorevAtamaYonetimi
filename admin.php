@@ -123,11 +123,10 @@ if ($username == "admin")
                         foreach ($users as $user) {
                     ?>
                             <div class="col" style="margin-bottom:10px;">
-                                <span class="text"><?php echo " - Kullanıcı Adı: " . htmlspecialchars($user['username'])  ?> </span>
-                                <span class="text"><?php echo " - Şifre: " .  htmlspecialchars($user['password'])  ?> </span>
-                                <span class="text"><?php echo " - E-Mail: " . htmlspecialchars($user['email'])  ?> </span>
-                                <span class="text"><?php echo " - Telefon: " . htmlspecialchars($user['telefon'])  ?> </span>
-                                <span class="text"><?php echo "- Görev: " . htmlspecialchars($user['gorev'])  ?> </span>
+                                <span class="text"><?php echo "  -  " . htmlspecialchars($user['username'])  ?> </span>
+                                <span class="text"><?php echo "  -  " . htmlspecialchars($user['email'])  ?> </span>
+                                <span class="text"><?php echo "  -  " . htmlspecialchars($user['telefon'])  ?> </span>
+                                <span class="text"><?php echo "  -  " . htmlspecialchars($user['gorev'])  ?> </span>
 
                            
 

@@ -14,7 +14,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-if (isset($data['gorev_konusu']) && !empty($data['date1']) && isset($data['date2']) && !empty($data['aciklamasi']) && !empty($data['ekip'])) {
+if (isset($data['gorev_konusu']) && !empty($data['date1']) && isset($data['date2']) && !empty($data['aciklamasi']) && !empty($data['gorev_username'])) {
     $gorev_konusu = $data['gorev_konusu'];
     $date1 = $data['date1'];
     $date2 = $data['date2'];

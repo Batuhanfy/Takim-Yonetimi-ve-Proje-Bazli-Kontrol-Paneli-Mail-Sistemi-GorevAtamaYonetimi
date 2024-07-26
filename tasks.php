@@ -61,7 +61,7 @@ try {
 } catch (PDOException $e) {
 }
 
-$sql = "SELECT task, startDate,endDate,aciklamasi,id FROM mytask WHERE username = :username order by endDate asc";
+$sql = "SELECT task, startDate,endDate,aciklamasi,id FROM mytask WHERE username = :username order by endDate desc";
 
 $stmt = $pdo->prepare($sql);
 
@@ -142,7 +142,7 @@ if ($username == "admin")
         ?>
 
             <div class="my-notes-menu-not tasks" id="<?php print_r($note['id']); ?>" <?php if ($endDate < $now) {
-                                                                                    echo 'style="border: 2px solid red;";';
+                                                                                    echo 'style="border: 2px solid #eeb2ff;";';
                                                                                 } ?>>
 
                 <div class="container text-center">
@@ -151,7 +151,13 @@ if ($username == "admin")
                             <span class="text">
                                 <?php
                                 if ($endDate < $now) {
-                                    print_r("Tarihi Geçti.");
+                                    print_r("Bu görevin tarihi geçti.");
+                                }else {
+                                    $interval = $now->diff($endDate); 
+                                    $daysLeft = $interval->days; 
+                                    print_r("Süresinin dolmasına: " . $daysLeft . " gün kaldı.<br/>");
+                                    print_r($note['endDate']);
+
                                 }
                                 ?>
                             </span>
