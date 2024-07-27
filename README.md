@@ -49,9 +49,7 @@ Bu proje, ekip yönetimi, görev atama ve iletişim süreçlerini merkezi bir pl
 
 ![image](https://github.com/user-attachments/assets/6a373c01-3882-465e-981f-2cf8826f5dea)
 
-Demo: https://batuhankorkmaz.com/openmytask/dashboard.php
-Kullanıcı Adı: Admin
-Şifre: Admin
+
 
 ## **Kurulum ve Kullanım**
 
