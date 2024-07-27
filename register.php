@@ -1,4 +1,8 @@
 <?php 
+// Localhost = 0 (Low Security!) (Because its not possible to enable local wamp,etc.. servers sha password authentication)
+// Hosting Server ( Live and Using Normally ) = 1 do it here (and go login.php and change this variable)
+$ishash256passwordsystem = 0;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
@@ -24,8 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $id = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    if($ishash256passwordsystem == 1){
+    $hashed_password = hash('sha256', $password);}else {
+    $hashed_password = $password;
+    }
 
+    
     try {
      
 
@@ -33,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([
             'id' => $id,
             'username' => $username,
-            'password' => $hashedPassword,
+            'password' => $hashed_password,
             'email' => $email,
             'telefon' => $telefon,
             'yetki' => $yetki,

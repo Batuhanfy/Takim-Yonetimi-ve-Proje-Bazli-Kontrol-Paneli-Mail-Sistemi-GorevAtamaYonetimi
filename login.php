@@ -1,5 +1,10 @@
 <?php
 
+// Localhost = 0 (Low Security!) (Because its not possible to enable local wamp,etc.. servers sha password authentication)
+// Hosting Server ( Live and Using Normally ) = 1 do it here (and register.php)
+$ishash256passwordsystem = 0;
+
+
 session_start();
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
     header("Location: dashboard.php");
@@ -25,14 +30,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
+if($_POST['username'] == "" || $_POST['password'] == ""){
+    return;
+   
+
+}
+
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-        $stmt = $pdo->prepare("SELECT password FROM users WHERE username = :username");
+        $stmt = $pdo->prepare("SELECT password,ban FROM users WHERE username = :username");
         $stmt->execute(['username' => $username]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($result && password_verify($password, $result['password'])) {
+        if($result['ban'] == 1){
+            print_r("Erişim Engeliniz Bulunmakta!");
+            print_r("<script>alert('Erişim Engeliniz bulunmakta');</script>");
+            exit;
+        }
+
+
+    
+        if($ishash256passwordsystem == 1){
+        $hashed_password = hash('sha256', $password);
+       }else {
+        $hashed_password = $password;
+        }
+        
+        if ($result && hash_equals($result['password'], $hashed_password)) {
             $_SESSION['username'] = $username;
             $_SESSION['loggedin'] = true;
             header('Location: dashboard.php');

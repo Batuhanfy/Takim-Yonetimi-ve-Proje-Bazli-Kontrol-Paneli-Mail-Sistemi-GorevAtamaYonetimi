@@ -144,6 +144,24 @@ $yetki = "Admin";
 
   </div>
 
+
+  
+  <div id="setgroup" class="overlay" style="display:none;">
+    <div class="popup-content">
+      <p id="message-content">Kullanıcıya Ekip Tanımlama Sistemi</p>
+      <p id="howissent" style="display:none"></p>
+      <input id="ekip_id" class="form-control mb-2" placeholder="Ekip Numarası Giriniz"></input>
+      <input id="ekip_username" class="form-control mb-2" placeholder="Kullanıcı Adı Giriniz"></input>
+     <span>Bu panel, yönetici veya üye fark etmeksizin kayıtlı kullanıcıları herhangi bir ekibe taşımaktadır.</span>
+
+
+      <button onclick="document.getElementById('setgroup').style.display='none';">Kapat</button>
+      <button onclick="ekibeata()" style="bottom: 20%;background: #444;">Tanımla</button>
+
+    </div>
+
+  </div>
+
   <div class="headings fade-in-down-4">
     <div class="logo"><img src="images/openmytask.png"></div>
     <div class="account">
@@ -180,6 +198,7 @@ $yetki = "Admin";
           <div class="card_title">Notlarım</div>
         </div>
       <?php } ?>
+      
 
       <?php if ($send_message_permission == 1) { ?>
         <div class="col faction fade-in-down-2" onClick="window.location.href = 'gelenkutusu.php';">
@@ -201,18 +220,41 @@ $yetki = "Admin";
         </div>
       <?php } ?>
       <?php if ($yetki == "Supervisor" || $yetki == "Admin") { ?>
+        <div class="col faction fade-in-down-2" onClick="window.location.href = 'alltasks.php';">
+
+          <div class="image"><img src="openmytask/list.svg" alt="Görev Görüntüle"></div>
+          <div class="card_title">Tüm Görevleri Görüntüle</div>
+        </div>
+      <?php } ?>
+        <div class="col faction fade-in-down-2" onClick="window.location.href = 'adminlist.php';">
+
+          <div class="image"><img src="openmytask/contact.svg" alt="Yetkili Listesi"></div>
+          <div class="card_title">Yetkili Listesi</div>
+        </div>
+      <?php if ($yetki == "Supervisor" || $yetki == "Admin") { ?>
         <div class="col faction fade-in-down-2" onClick="window.location.href = 'newmember.php';">
 
           <div class="image"><img src="openmytask/add.svg" alt="Yeni Görev Tanımla"></div>
           <div class="card_title">Yeni Üye</div>
         </div>
       <?php } ?>
+
       <div class="col faction fade-in-down-2" onClick="window.location.href = 'ekibim.php';">
         <div class="image"><img src="openmytask/teams.svg" alt="Ekibim"></div>
         <div class="card_title">Ekibim</div>
       </div>
 
+
+      <?php if ($yetki == "Supervisor" || $yetki == "Admin") { ?>
+
+      <div class="col faction fade-in-down-2" onClick="setgroup();">
+        <div class="image"><img src="openmytask/teams.svg" alt="Ekiplere Ekle"></div>
+        <div class="card_title">Kullanıcıya Ekip Tanımla</div>
+      </div>
+      <?php } ?>
+
     </div>
+   
   </div>
 
 
@@ -277,6 +319,9 @@ $yetki = "Admin";
     function yenigorevtanimla() {
       document.getElementById('gorevtanimla').style.display = "flex";
     }
+    function setgroup() {
+      document.getElementById('setgroup').style.display = "flex";
+    }
 
     function gorevlendir() {
 
@@ -290,8 +335,7 @@ $yetki = "Admin";
 
       if (gorev_konusu.trim() !== "" && gorev_username.trim() !== "" && aciklamasi.trim() !== "" && date1.trim() !== "" && date2.trim() !== "") {
       
-        alert("boş değillllll");
-      
+    
       
         fetch('add_task_member.php', {
             method: 'POST',
@@ -323,17 +367,54 @@ $yetki = "Admin";
         
       
         } else {
-          alert("boşşşşşşş");
         alert('Boş alan olamaz.');
       }
 
-
-
- 
- 
- 
     }
 
+
+
+    function ekibeata() {
+
+document.getElementById('setgroup').style.display = "none";
+
+const ekip = document.getElementById('ekip_id').value;
+const username = document.getElementById('ekip_username').value;
+
+if (ekip.trim() !== "" && username.trim() !== "") {
+
+
+
+  fetch('setgroup.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ekip: ekip,
+        username: username
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert("İşleminiz başarıyla gerçekleştirildi.");
+        window.location.reload();
+
+      } else {
+        alert('Hata: ' + data.message);
+        window.location.reload();
+      }
+    })
+  
+    .catch(error => console.error('Error:', error));
+  
+
+  } else {
+  alert('Boş alan olamaz.');
+}
+
+}
     
   </script>
 </body>

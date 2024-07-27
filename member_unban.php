@@ -19,7 +19,7 @@ if ( !empty($data['gorev_username'])) {
 
     $hata = 0;
 
-        $sql =  "UPDATE users set ban=1 where username=:usernames";
+        $sql =  "UPDATE users set ban=0 where username=:usernames";
         $stmt = $pdo->prepare($sql);
 
         $ids = bin2hex(random_bytes(5));
