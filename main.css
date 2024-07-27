@@ -681,7 +681,7 @@ align-items: center;
     width: 100%;
     top: 25%;
     position: absolute;
-    align-content: center;
+    align-content: flex-start;
     justify-content: space-evenly;
     flex-wrap: wrap;
     flex-direction: row;

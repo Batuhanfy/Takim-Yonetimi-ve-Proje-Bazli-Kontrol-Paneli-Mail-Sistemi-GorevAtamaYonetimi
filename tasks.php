@@ -130,9 +130,7 @@ if ($username == "admin")
     <div class="account-edit-tab-tasks fade-in-down-4">
         
 
-        <div class="bilgilendirme">
-            <h3>Bu listenizi Moderatör kullanıcılar görüntüleyebilir.</h3>
-        </div>
+   
         <?php
         $now = new DateTime();
         foreach ($notes as $note) {
