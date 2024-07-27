@@ -1,6 +1,7 @@
 
 # **Ekip Yönetim ve İşbirliği Sistemi**
 
+
 ![img1](https://github.com/user-attachments/assets/9e9b9b60-9797-43d2-a400-e3b42cb0f9c5)
 
 
@@ -48,6 +49,9 @@ Bu proje, ekip yönetimi, görev atama ve iletişim süreçlerini merkezi bir pl
 
 ![image](https://github.com/user-attachments/assets/6a373c01-3882-465e-981f-2cf8826f5dea)
 
+Demo: https://batuhankorkmaz.com/openmytask/dashboard.php
+Kullanıcı Adı: Admin
+Şifre: Admin
 
 ## **Kurulum ve Kullanım**
 
@@ -68,9 +72,14 @@ Katkıda bulunmak isterseniz, iletişime geçebilirsiniz.
 ## **İletişim**
 
 Herhangi bir soru, öneri veya geri bildirim için benimle iletişime geçebilirsiniz:
+
+
 - **E-posta**: iletisim@batuhankorkmaz.com / bthnkkz@yahoo.com
 - **GitHub Profil**: https://github.com/Batuhanfy
 
 ## **Lisans**
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+
+
+
