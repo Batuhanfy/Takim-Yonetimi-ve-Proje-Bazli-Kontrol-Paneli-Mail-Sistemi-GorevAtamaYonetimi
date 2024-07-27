@@ -11,10 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require 'database.php';
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
         $usernamess = $_SESSION['username'];
-    } else {
-        header("Location: login.php");
-        exit();
-    }
+    
     
 
     $username = $_POST['username'] ?? '';
@@ -57,5 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (PDOException $e) {
         echo "Veritabanı bağlantı hatası: " . $e->getMessage();
     }
+
+
+
+
+} else {
+    
+    print_r("Sistemin register özelliği devre dışıdır. Lütfen sistem yöneticisinden sizi sisteme kayıt eklemesini talep ediniz.");
+   
+}
 }
 ?>
