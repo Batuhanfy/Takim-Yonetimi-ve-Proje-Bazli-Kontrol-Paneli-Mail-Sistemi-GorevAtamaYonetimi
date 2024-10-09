@@ -27,7 +27,7 @@ if (isset($data['note']) && !empty($data['note'])) {
     try {
         $stmt->execute();
         $id = $pdo->lastInsertId();
-        echo json_encode(['success' => true, 'id' => $id]);
+         echo json_encode(['success' => true, 'id' => $id]);
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Not eklenirken bir hata oluştu: ' . $e->getMessage()]);
     }
