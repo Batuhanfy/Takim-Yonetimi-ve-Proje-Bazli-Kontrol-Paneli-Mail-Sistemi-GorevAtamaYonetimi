@@ -32,17 +32,17 @@ try {
 
     foreach ($rows as $row) {
         if (isset($row['gorev']) && $row['gorev'] !== false) {
-            $gorev = $row['gorev'];
+             $gorev = $row['gorev'];
         } else {
         }
 
         if (isset($row['email']) && $row['email'] !== false) {
-            $mail = $row['email'];
+             $mail = $row['email'];
         } else {
         }
 
         if (isset($row['telefon']) && $row['telefon'] !== false) {
-            $telefon = $row['telefon'];
+             $telefon = $row['telefon'];
         } else {
         }
 
